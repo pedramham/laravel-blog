@@ -19,3 +19,6 @@ yarn-error.log
 /.vscode
 /vendor
 /composer.lock
+/packages/api-blog/vendor/
+/packages/api-blog/composer.lock
+
