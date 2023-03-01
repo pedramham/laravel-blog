@@ -1,0 +1,16 @@
+{
+    "name": "admin/api-bolg",
+    "description": "this is admin api",
+    "autoload": {
+        "psr-4": {
+            "Admin\\ApiBolg\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "morteza",
+            "email": "morteza@shapeandshif.dev"
+        }
+    ],
+    "require": {}
+}
