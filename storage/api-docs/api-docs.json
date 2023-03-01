@@ -1,0 +1,623 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel OpenApi Demo Documentation",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "admin@admin.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/blog-api/auth/v1/register": {
+            "post": {
+                "tags": [
+                    "Blog API"
+                ],
+                "summary": "Register",
+                "description": "Register",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "admin"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test@,test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "name": "admin",
+                                    "email": "test@test.com",
+                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                    "id": "1"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  Unauthorized"
+                    }
+                }
+            }
+        },
+        "/blog-api/auth/v1/login": {
+            "post": {
+                "tags": [
+                    "Blog API"
+                ],
+                "summary": "Login user",
+                "description": "user login",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test@,test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "LWHIXc57VJ7rONJOMORO5D9jvJ84h1p1yrUhbBR2"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  Unauthorized"
+                    }
+                }
+            }
+        },
+        "/blog-api/category/v1/list": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "list Category",
+                "description": "list Category",
+                "operationId": "list",
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "category",
+                                                    "title": "title category",
+                                                    "slug": "slug category",
+                                                    "description": "description category",
+                                                    "pic_small": "pic_small category",
+                                                    "pic_large": "pic_large category",
+                                                    "parent_id": "1",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                },
+                                                {
+                                                    "name": "category",
+                                                    "title": "title category",
+                                                    "slug": "slug category",
+                                                    "description": "description category",
+                                                    "pic_small": "pic_small category",
+                                                    "pic_large": "pic_large category",
+                                                    "parent_id": "1",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                }
+            }
+        },
+        "/blog-api/category/v1/store": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Store category in DB",
+                "description": "Store category in DB",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-article-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Description"
+                                    },
+                                    "pic-small": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Small"
+                                    },
+                                    "pic-large": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Large"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Category"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "category",
+                                                "title": "title category",
+                                                "slug": "slug category",
+                                                "description": "description category",
+                                                "pic_small": "pic_small category",
+                                                "pic_large": "pic_large category",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                }
+            }
+        },
+        "/blog-api/category/v1/show": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Store category in DB",
+                "description": "Store category in DB",
+                "operationId": "show",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "category",
+                                                "title": "title category",
+                                                "slug": "slug category",
+                                                "description": "description category",
+                                                "pic_small": "pic_small category",
+                                                "pic_large": "pic_large category",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                }
+            }
+        },
+        "/blog-api/category/v1/edit": {
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Edit category in DB",
+                "description": "Edit category in DB",
+                "operationId": "edit",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-article-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Description"
+                                    },
+                                    "pic-small": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Small"
+                                    },
+                                    "pic-large": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Large"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "category",
+                                                "title": "title category",
+                                                "slug": "slug category",
+                                                "description": "description category",
+                                                "pic_small": "pic_small category",
+                                                "pic_large": "pic_large category",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                }
+            }
+        },
+        "/blog-api/post/v1/store": {
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Store post in DB",
+                "description": "Store post in DB",
+                "operationId": "storePost",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-article-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Description"
+                                    },
+                                    "pic_small": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Small"
+                                    },
+                                    "pic_large": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Large"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Post"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "post name",
+                                                "title": "title post",
+                                                "slug": "slug category",
+                                                "description": "description post",
+                                                "pic_small": "pic_small post",
+                                                "pic_large": "pic_large post",
+                                                "category_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Blog API",
+            "description": "API Endpoints of Projects"
+        }
+    ]
+}
