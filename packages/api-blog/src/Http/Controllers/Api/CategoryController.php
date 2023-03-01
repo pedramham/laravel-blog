@@ -7,12 +7,11 @@ use Admin\ApiBolg\Http\Requests\Category\EditRequest;
 use Admin\ApiBolg\Http\Requests\Category\ShowRequest;
 use Admin\ApiBolg\Http\Requests\Category\StoreRequest;
 use Admin\ApiBolg\Models\Category;
-use Admin\ApiBolg\Services\Authorization\CategoryService;
+use Admin\ApiBolg\Services\CategoryService;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use OpenApi\Annotations as OA;
 
 class CategoryController extends Controller
 {
@@ -26,7 +25,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/blog-api/category/v1/category-list",
+     *      path="/blog-api/category/v1/list",
      *      operationId="list",
      *      tags={"Category"},
      *      summary="list Category",
@@ -65,7 +64,7 @@ class CategoryController extends Controller
      *                         "id": "1",
      *                          },
      *                          {
-     *                               *                         "name": "category",
+     *                          "name": "category",
      *                         "title": "title category",
      *                         "slug": "slug category",
      *                         "description": "description category",
@@ -87,7 +86,7 @@ class CategoryController extends Controller
     {
         try {
             return new ApiBlogResponse(
-                $this->categoryService->list()
+                $this->categoryService->list(Category::class)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -96,7 +95,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/blog-api/category/v1/category-store",
+     *      path="/blog-api/category/v1/store",
      *      operationId="store",
      *      tags={"Category"},
      *      summary="Store category in DB",
@@ -158,7 +157,7 @@ class CategoryController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->store($input),
+                $this->categoryService->store($input,Category::class),
                 'Category created successfully',
                 true,
                 200
@@ -171,7 +170,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/blog-api/category/v1/category-show",
+     *      path="/blog-api/category/v1/show",
      *      operationId="show",
      *      tags={"Category"},
      *      summary="Store category in DB",
@@ -227,7 +226,7 @@ class CategoryController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->show($input)
+                $this->categoryService->show($input,Category::class)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -236,7 +235,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/blog-api/category/v1/category-edit",
+     *      path="/blog-api/category/v1/edit",
      *      operationId="edit",
      *      tags={"Category"},
      *      summary="Edit category in DB",
@@ -299,7 +298,7 @@ class CategoryController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->edit($input)
+                $this->categoryService->edit($input,Category::class)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
