@@ -4,7 +4,7 @@ namespace Admin\ApiBolg\Http\Controllers\Api;
 
 use Admin\ApiBolg\Http\ApiBlogResponse;
 use Admin\ApiBolg\Http\Requests\Category\EditRequest;
-use Admin\ApiBolg\Http\Requests\Category\ShowRequest;
+use Admin\ApiBolg\Http\Requests\Category\CategoryRequest;
 use Admin\ApiBolg\Http\Requests\Category\StoreRequest;
 use Admin\ApiBolg\Models\Category;
 use Admin\ApiBolg\Services\CategoryService;
@@ -224,7 +224,7 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error  edit"),
      *  )
      */
-    public function show(ShowRequest $request)
+    public function show(CategoryRequest $request)
     {
         $input = $request->validated();
         try {
@@ -351,7 +351,7 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error soft delete"),
      *  )
      */
-    public function softDelete(ShowRequest $request): ApiBlogResponse
+    public function softDelete(CategoryRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
@@ -403,7 +403,7 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error Delete"),
      *  )
      */
-    public function delete(ShowRequest $request): ApiBlogResponse
+    public function delete(CategoryRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
@@ -455,7 +455,7 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error category delete"),
      *  )
      */
-    public function restoreDelete(ShowRequest $request): ApiBlogResponse
+    public function restoreDelete(CategoryRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {

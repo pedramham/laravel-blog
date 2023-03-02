@@ -4,7 +4,7 @@ namespace Admin\ApiBolg\Http\Controllers\Api;
 
 use Admin\ApiBolg\Http\ApiBlogResponse;
 use Admin\ApiBolg\Http\Requests\Post\EditRequest;
-use Admin\ApiBolg\Http\Requests\Post\ShowRequest;
+use Admin\ApiBolg\Http\Requests\Post\PostRequest;
 use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
 use Admin\ApiBolg\Models\Post;
 use Admin\ApiBolg\Services\PostService;
@@ -225,7 +225,7 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error  edit"),
      *  )
      */
-    public function show(ShowRequest $request)
+    public function show(PostRequest $request)
     {
         $input = $request->validated();
         try {
@@ -352,7 +352,7 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error  soft delete"),
      *  )
      */
-    public function softDelete(ShowRequest $request): ApiBlogResponse
+    public function softDelete(PostRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
@@ -405,7 +405,7 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error Delete"),
      *  )
      */
-    public function delete(ShowRequest $request): ApiBlogResponse
+    public function delete(PostRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
@@ -457,7 +457,7 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error Restore delete"),
      *  )
      */
-    public function restoreDelete(ShowRequest $request): ApiBlogResponse
+    public function restoreDelete(PostRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
