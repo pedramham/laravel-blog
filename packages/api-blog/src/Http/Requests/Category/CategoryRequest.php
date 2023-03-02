@@ -1,10 +1,10 @@
 <?php
 
-namespace Admin\ApiBolg\Http\Requests\Post;
+namespace Admin\ApiBolg\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShowRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -15,7 +15,7 @@ class ShowRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'integer|required|exists:posts,id',
+            'id' => 'integer|required|exists:categories,id',
         ];
     }
 }
