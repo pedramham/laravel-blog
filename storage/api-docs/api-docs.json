@@ -225,7 +225,12 @@
                     "401": {
                         "description": "Error  edit"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
             }
         },
         "/blog-api/category/v1/store": {
@@ -328,7 +333,12 @@
                     "401": {
                         "description": "Error  edit"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
             }
         },
         "/blog-api/category/v1/show": {
@@ -400,7 +410,12 @@
                     "401": {
                         "description": "Error  edit"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
             }
         },
         "/blog-api/category/v1/edit": {
@@ -507,6 +522,193 @@
                     "401": {
                         "description": "Error  edit"
                     }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/category/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Soft-delete category in DB",
+                "description": "Soft-delete category in DB",
+                "operationId": "soft-delete-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/category/v1/delete": {
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "delete category in DB",
+                "description": "delete category in DB",
+                "operationId": "delete-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/category/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "restore delete category in DB",
+                "description": "when you delete category in DB you can restore it",
+                "operationId": "restore-delete-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error category delete"
+                    }
                 }
             }
         },
@@ -610,7 +812,465 @@
                     "401": {
                         "description": "Error  edit"
                     }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/post/v1/list": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "list Post",
+                "description": "list Post",
+                "operationId": "list-post",
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "description": "description Post",
+                                                    "pic_small": "pic_small Post",
+                                                    "pic_large": "pic_large Post",
+                                                    "category_id": "1",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                },
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "description": "description Post",
+                                                    "pic_small": "pic_small Post",
+                                                    "pic_large": "pic_large Post",
+                                                    "category_id": "1",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/post/v1/show": {
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Store post in DB",
+                "description": "Store category in DB",
+                "operationId": "show-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "post",
+                                                "title": "title post",
+                                                "slug": "slug post",
+                                                "description": "description post",
+                                                "pic_small": "pic_small post",
+                                                "pic_large": "pic_large post",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/post/v1/edit": {
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Edit post in DB",
+                "description": "Edit post in DB",
+                "operationId": "edit-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-article-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Description"
+                                    },
+                                    "pic-small": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Small"
+                                    },
+                                    "pic-large": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Pic Large"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "post",
+                                                "title": "title post",
+                                                "slug": "slug post",
+                                                "description": "description post",
+                                                "pic_small": "pic_small post",
+                                                "pic_large": "pic_large post",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/post/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Soft-delete post in DB",
+                "description": "Soft-delete post in DB",
+                "operationId": "soft-delete-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/post/v1/delete": {
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "delete post in DB",
+                "description": "delete post in DB",
+                "operationId": "delete-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Delete"
+                    }
                 }
+            }
+        },
+        "/blog-api/post/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "restore delete post in DB",
+                "description": "when you delete post in DB you can restore it",
+                "operationId": "restore-delete-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Restore delete"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

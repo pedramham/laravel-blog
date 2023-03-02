@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('post_tag', function (Blueprint $table) {
             $table->increments('id');
+            $table->softDeletes();
             $table->integer('post_id')->nullable()->unsigned()->index();
             $table->integer('tag_id')->nullable()->unsigned()->index();
             $table->timestamps();
