@@ -30,6 +30,7 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      summary="list Category",
      *      description="list Category",
+     *      security={{ "apiAuth": {} }},
      *      @OA\Response(
      *          response="200",
      *          description="An example resource",
@@ -100,6 +101,7 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      summary="Store category in DB",
      *      description="Store category in DB",
+     *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -175,6 +177,7 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      summary="Store category in DB",
      *      description="Store category in DB",
+     *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -240,6 +243,7 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      summary="Edit category in DB",
      *      description="Edit category in DB",
+     *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -307,13 +311,160 @@ class CategoryController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Admin\ApiBolg\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *      path="/blog-api/category/v1/soft-delete",
+     *      operationId="soft-delete-category",
+     *      tags={"Category"},
+     *      summary="Soft-delete category in DB",
+     *      description="Soft-delete category in DB",
+     *      security={{ "apiAuth": {} }},
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"id"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="2")
+     *         ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="An example resource",
+     *          @OA\JsonContent(
+     *              type="object",
+     *                     @OA\Property(
+     *                         property="success",
+     *                         type="integer",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                    @OA\Property(
+     *                         property="data",
+     *                         type="string",
+     *                         example="true"
+     *                     ),
+
+     *          )
+     *     ),
+     *     @OA\Response(response="401", description="Error soft delete"),
+     *  )
      */
-    public function destroy(Category $category)
+    public function softDelete(ShowRequest $request): ApiBlogResponse
     {
-        //
+        $input = $request->validated();
+        try {
+            return new ApiBlogResponse(
+                $this->categoryService->softDelete($input,Category::class)
+            );
+        } catch (\Exception $exception) {
+            return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
+        }
+    }
+
+    /**
+     * @OA\Delete(
+     *      path="/blog-api/category/v1/delete",
+     *      operationId="delete-category",
+     *      tags={"Category"},
+     *      summary="delete category in DB",
+     *      description="delete category in DB",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"id"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="2")
+     *         ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="An example resource",
+     *          @OA\JsonContent(
+     *              type="object",
+     *                     @OA\Property(
+     *                         property="success",
+     *                         type="integer",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                    @OA\Property(
+     *                         property="data",
+     *                         type="string",
+     *                         example="true"
+     *                     ),
+
+     *          )
+     *     ),
+     *     @OA\Response(response="401", description="Error Delete"),
+     *  )
+     */
+    public function delete(ShowRequest $request): ApiBlogResponse
+    {
+        $input = $request->validated();
+        try {
+            return new ApiBlogResponse(
+                $this->categoryService->delete($input,Category::class),
+                200
+            );
+        } catch (\Exception $exception) {
+            return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
+        }
+    }
+
+    /**
+     * @OA\Put(
+     *      path="/blog-api/category/v1/restore-delete",
+     *      operationId="restore-delete-category",
+     *      tags={"Category"},
+     *      summary="restore delete category in DB",
+     *      description="when you delete category in DB you can restore it",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"id"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="2")
+     *         ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="An example resource if success",
+     *          @OA\JsonContent(
+     *              type="object",
+     *                     @OA\Property(
+     *                         property="success",
+     *                         type="integer",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                    @OA\Property(
+     *                         property="data",
+     *                         type="string",
+     *                         example="true"
+     *                     ),
+     *          )
+     *     ),
+     *     @OA\Response(response="401", description="Error category delete"),
+     *  )
+     */
+    public function restoreDelete(ShowRequest $request): ApiBlogResponse
+    {
+        $input = $request->validated();
+        try {
+            return new ApiBlogResponse(
+                $this->categoryService->restoreDelete($input,Category::class),
+                200
+            );
+        } catch (\Exception $exception) {
+            return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
+        }
     }
 }

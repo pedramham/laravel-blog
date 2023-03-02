@@ -39,7 +39,15 @@ class AuthorizationController extends Controller
      *      url=L5_SWAGGER_CONST_HOST,
      *      description="Demo API Server"
      * )
-
+     * @OA\SecurityScheme(
+     *     type="http",
+     *     description="Login with email and password to get the authentication token",
+     *     name="Token based Based",
+     *     in="header",
+     *     scheme="bearer",
+     *     bearerFormat="JWT",
+     *     securityScheme="apiAuth",
+     *     ),
      *
      * @OA\Tag(
      *     name="Blog API",
