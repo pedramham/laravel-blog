@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::prefix('blog-api/post/v1/')->group(function () {
         Route::post('store',[PostController::class, 'store']);
         Route::put('edit',[PostController::class, 'edit']);
-        Route::get('list',[PostController::class, 'list']);
+        Route::post('list',[PostController::class, 'list']);
         Route::post('show',[PostController::class, 'show']);
         Route::delete('soft-delete',[PostController::class, 'softDelete']);
         Route::delete('delete',[PostController::class, 'delete']);
