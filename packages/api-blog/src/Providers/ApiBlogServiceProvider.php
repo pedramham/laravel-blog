@@ -2,6 +2,7 @@
 
 namespace Admin\ApiBolg\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class ApiBlogServiceProvider extends ServiceProvider
@@ -22,7 +23,6 @@ class ApiBlogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $this->loadDatabase();
         $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
     //    dd(__DIR__.'/../../routes/api.php');

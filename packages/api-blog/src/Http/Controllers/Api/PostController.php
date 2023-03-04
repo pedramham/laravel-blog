@@ -36,13 +36,34 @@ class PostController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *            required={"title", "slug"},
-     *            @OA\Property(property="title", type="string", format="string", example="Test Article Title"),
-     *            @OA\Property(property="slug", type="string", format="string", example="test-article-title"),
-     *            @OA\Property(property="subject", type="string", format="string", example="Test Article Subject"),
-     *            @OA\Property(property="description", type="string", format="string", example="Test Article Description"),
-     *            @OA\Property(property="pic_small", type="string", format="string", example="Test Article Pic Small"),
-     *            @OA\Property(property="pic_large", type="string", format="string", example="Test Article Pic Large"),
+     *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
+     *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
+     *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
+     *            @OA\Property(property="slug", type="string", format="string", example="Test Slug status"),
+     *            @OA\Property(property="subject", type="string", format="string", example="Test Post Subject"),
+     *            @OA\Property(property="description", type="string", format="string", example="Test Post Description"),
+     *            @OA\Property(property="meta_description", type="string", format="string", example="Test Post Meta Description"),
+     *            @OA\Property(property="meta_keywords", type="string", format="string", example="Test Post Meta Keywords"),
+     *            @OA\Property(property="meta_language", type="string", format="string", example="Test Post Meta Language"),
+     *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
+     *            @OA\Property(property="post_type", type="string", format="string", example="Test Post Post Type"),
+     *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
+     *            @OA\Property(property="pic_small", type="string", format="string", example="Test Post Pic Small"),
+     *            @OA\Property(property="pic_large", type="string", format="string", example="Test Post Pic Large"),
+     *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
+     *            @OA\Property(property="comment_status", type="boolean", format="boolean", example="true"),
+     *            @OA\Property(property="menu_status", type="boolean", format="boolean", example="true"),
+     *            @OA\Property(property="visible_index_status", type="boolean", format="boolean", example="true"),
      *            @OA\Property(property="category_id", type="integer", format="integer", example="1"),
+     *                @OA\Property(
+     *                    property="tags",
+     *                    type="array",
+     *                    @OA\Items,
+     *                      example={
+     *                      "id": "1",
+     *                      "name": "tag post",
+     *                   },
+     *                )
      *         ),
      *      ),
      *      @OA\Response(
@@ -68,14 +89,30 @@ class PostController extends Controller
      *                         example={
      *                         "name": "post name",
      *                         "title": "title post",
+     *                         "status": "True",
      *                         "slug": "slug category",
      *                         "description": "description post",
+     *                         "meta_description": "meta_description post",
+     *                         "meta_keywords": "meta_keywords post",
+     *                         "meta_language": "meta_language post",
+     *                         "tweet_text": "tweet_text post",
+     *                         "tweet_text": "tweet_text post",
+     *                         "post_type": "post_type post",
+     *                         "menu_order": "menu_order post",
+     *                         "priority": "133",
      *                         "pic_small": "pic_small post",
      *                         "pic_large": "pic_large post",
+     *                         "comment_status": "True",
+     *                         "menu_status": "True",
+     *                         "visible_index_status": "True",
      *                         "category_id": "1",
      *                         "updated_at": "2023-02-19T07:39:12.000000Z",
      *                         "created_at": "2023-02-19T07:39:12.000000Z",
      *                         "id": "1",
+     *                         "tags": {
+     *                                "id": "1",
+     *                                "name": "tag post",
+     *                              }
      *                         },
      *                     ),
 
@@ -89,7 +126,7 @@ class PostController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->store($input, Post::class),
+                $this->postService->storePost($input),
                 'Post created successfully',
                 true,
                 200
