@@ -9,7 +9,8 @@ use Admin\ApiBolg\Traits\ModelTrait;
 class PostService
 {
     use ModelTrait;
-    public function storePost($request)
+
+    public function storePost(array $request): array
     {
         $post = $this->store($request, Post::class);
 

@@ -22,9 +22,9 @@ trait ModelTrait
         return  $model::find($input['id']);
     }
 
-    public function list($model): Collection
+    public function listPagination($model, $input): Collection
     {
-        return  $model::all();
+        return  $model::listPagination($input);
     }
 
     public function softDelete(array $input, $model): bool

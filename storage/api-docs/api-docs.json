@@ -911,6 +911,38 @@
                 "summary": "list Post",
                 "description": "list Post",
                 "operationId": "list-post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "skip",
+                                    "take",
+                                    "post_type"
+                                ],
+                                "properties": {
+                                    "skip": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "0"
+                                    },
+                                    "take": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "10"
+                                    },
+                                    "post_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "article"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "An example resource",
@@ -937,8 +969,6 @@
                                                     "slug": "slug Post",
                                                     "description": "description Post",
                                                     "pic_small": "pic_small Post",
-                                                    "pic_large": "pic_large Post",
-                                                    "category_id": "1",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
                                                     "created_at": "2023-02-19T07:39:12.000000Z",
                                                     "id": "1"
@@ -949,10 +979,9 @@
                                                     "slug": "slug Post",
                                                     "description": "description Post",
                                                     "pic_small": "pic_small Post",
-                                                    "pic_large": "pic_large Post",
-                                                    "category_id": "1",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
-                                                    "created_at": "2023-02-19T07:39:12.000000Z"
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "2"
                                                 }
                                             ]
                                         }
