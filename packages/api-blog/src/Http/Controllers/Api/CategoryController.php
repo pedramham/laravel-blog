@@ -5,6 +5,7 @@ namespace Admin\ApiBolg\Http\Controllers\Api;
 use Admin\ApiBolg\Http\ApiBlogResponse;
 use Admin\ApiBolg\Http\Requests\Category\EditRequest;
 use Admin\ApiBolg\Http\Requests\Category\CategoryRequest;
+use Admin\ApiBolg\Http\Requests\Category\ListRequest;
 use Admin\ApiBolg\Http\Requests\Category\StoreRequest;
 use Admin\ApiBolg\Models\Category;
 use Admin\ApiBolg\Services\CategoryService;
@@ -24,13 +25,22 @@ class CategoryController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *      path="/blog-api/category/v1/list",
      *      operationId="list",
      *      tags={"Category"},
      *      summary="list Category",
      *      description="list Category",
      *      security={{ "apiAuth": {} }},
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"skip","take", "post_type"},
+     *            @OA\Property(property="skip", type="integer", format="integer", example="0"),
+     *            @OA\Property(property="take", type="integer", format="integer", example="10"),
+     *            @OA\Property(property="post_type", type="string", format="string", example="article"),
+     *         ),
+     *      ),
      *      @OA\Response(
      *          response="200",
      *          description="An example resource",
@@ -53,27 +63,24 @@ class CategoryController extends Controller
      *                         @OA\Items,
      *                         example={
      *                          {
-     *                         "name": "category",
-     *                         "title": "title category",
-     *                         "slug": "slug category",
-     *                         "description": "description category",
-     *                         "pic_small": "pic_small category",
-     *                         "pic_large": "pic_large category",
-     *                         "parent_id": "1",
-     *                         "updated_at": "2023-02-19T07:39:12.000000Z",
-     *                         "created_at": "2023-02-19T07:39:12.000000Z",
-     *                         "id": "1",
+     *                            "name": "Post",
+     *                            "title": "title Post",
+     *                            "slug": "slug Post",
+     *                            "description": "description Post",
+     *                            "pic_small": "pic_small Post",
+     *                            "updated_at": "2023-02-19T07:39:12.000000Z",
+     *                            "created_at": "2023-02-19T07:39:12.000000Z",
+     *                            "id": "1",
      *                          },
      *                          {
-     *                          "name": "category",
-     *                         "title": "title category",
-     *                         "slug": "slug category",
-     *                         "description": "description category",
-     *                         "pic_small": "pic_small category",
-     *                         "pic_large": "pic_large category",
-     *                         "parent_id": "1",
-     *                         "updated_at": "2023-02-19T07:39:12.000000Z",
-     *                         "created_at": "2023-02-19T07:39:12.000000Z",
+     *                            "name": "Post",
+     *                            "title": "title Post",
+     *                            "slug": "slug Post",
+     *                            "description": "description Post",
+     *                            "pic_small": "pic_small Post",
+     *                            "updated_at": "2023-02-19T07:39:12.000000Z",
+     *                            "created_at": "2023-02-19T07:39:12.000000Z",
+     *                            "id": "2",
      *                          },
      *                         },
      *                     ),
@@ -83,11 +90,13 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error  edit"),
      *  )
      */
-    public function list(): ApiBlogResponse
+    public function list(ListRequest $request): ApiBlogResponse
     {
+        $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
-                $this->categoryService->list(Category::class)
+                $this->categoryService->listPagination(Category::class, $input)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
