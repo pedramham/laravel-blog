@@ -2,6 +2,7 @@
 
 namespace Admin\ApiBolg\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,19 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
+    Const Category_STATUS = [
+        'draft' => 'draft',
+        'publish' => 'publish',
+        'pending' => 'pending',
+        'future' => 'future',
+        'private' => 'private',
+    ];
+
+    Const Category_TYPE = [
+        'article' => 'article',
+        'news' => 'news',
+        'page' => 'page',
+    ];
 
     protected $fillable = [
         'name',
@@ -31,4 +45,13 @@ class Category extends Model
         'pic_large',
         'parent_id',
     ];
+
+    public static function listPagination(array $input) : Collection
+
+    {
+        return  self::select('id','name','title','slug','subject','pic_small','created_at','updated_at')
+            ->where('status', self::Category_STATUS['publish'])
+            ->where('category_type', $input['category_type'])
+            ->skip($input['skip'])->take($input['take'])->get();
+    }
 }

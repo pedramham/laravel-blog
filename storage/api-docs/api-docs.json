@@ -164,13 +164,45 @@
             }
         },
         "/blog-api/category/v1/list": {
-            "get": {
+            "post": {
                 "tags": [
                     "Category"
                 ],
                 "summary": "list Category",
                 "description": "list Category",
                 "operationId": "list",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "skip",
+                                    "take",
+                                    "post_type"
+                                ],
+                                "properties": {
+                                    "skip": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "0"
+                                    },
+                                    "take": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "10"
+                                    },
+                                    "post_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "article"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "An example resource",
@@ -192,27 +224,24 @@
                                             "items": {},
                                             "example": [
                                                 {
-                                                    "name": "category",
-                                                    "title": "title category",
-                                                    "slug": "slug category",
-                                                    "description": "description category",
-                                                    "pic_small": "pic_small category",
-                                                    "pic_large": "pic_large category",
-                                                    "parent_id": "1",
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "description": "description Post",
+                                                    "pic_small": "pic_small Post",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
                                                     "created_at": "2023-02-19T07:39:12.000000Z",
                                                     "id": "1"
                                                 },
                                                 {
-                                                    "name": "category",
-                                                    "title": "title category",
-                                                    "slug": "slug category",
-                                                    "description": "description category",
-                                                    "pic_small": "pic_small category",
-                                                    "pic_large": "pic_large category",
-                                                    "parent_id": "1",
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "description": "description Post",
+                                                    "pic_small": "pic_small Post",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
-                                                    "created_at": "2023-02-19T07:39:12.000000Z"
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "2"
                                                 }
                                             ]
                                         }
@@ -904,7 +933,7 @@
             }
         },
         "/blog-api/post/v1/list": {
-            "get": {
+            "post": {
                 "tags": [
                     "Post"
                 ],

@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('store',[CategoryController::class, 'store']);
         Route::put('edit',[CategoryController::class, 'edit']);
         Route::post('show',[CategoryController::class, 'show']);
-        Route::get('list',[CategoryController::class, 'list']);
+        Route::post('list',[CategoryController::class, 'list']);
         Route::delete('soft-delete',[CategoryController::class, 'softDelete']);
         Route::delete('delete',[CategoryController::class, 'delete']);
         Route::put('restore-delete',[CategoryController::class, 'restoreDelete']);
