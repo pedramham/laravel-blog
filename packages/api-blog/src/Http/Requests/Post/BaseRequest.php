@@ -15,10 +15,7 @@ class BaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|required',
-            'title' => 'string|required',
             'status' => 'string|required_if:bak_leaflet,draft',
-            'slug' => 'string|required|unique:posts',
             'subject' => 'string|nullable',
             'description' => 'string|nullable',
             'meta_description' => 'string|nullable',
@@ -34,6 +31,9 @@ class BaseRequest extends FormRequest
             'pic_small' => 'string|nullable',
             'pic_large' => 'string|nullable',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'array|nullable',
+            'tags.id.*' => 'required|exists:tags,id',
+            'tags.name.*' => 'required|unique:tags',
         ];
     }
 }

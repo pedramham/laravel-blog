@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
-    Const Category_STATUS = [
+    const Category_STATUS = [
         'draft' => 'draft',
         'publish' => 'publish',
         'pending' => 'pending',
@@ -19,7 +19,7 @@ class Category extends Model
         'private' => 'private',
     ];
 
-    Const Category_TYPE = [
+    const Category_TYPE = [
         'article' => 'article',
         'news' => 'news',
         'page' => 'page',
@@ -46,12 +46,17 @@ class Category extends Model
         'parent_id',
     ];
 
-    public static function listPagination(array $input) : Collection
+    public static function listPagination(array $input): Collection
 
     {
-        return  self::select('id','name','title','slug','subject','pic_small','created_at','updated_at')
+        return self::select('id', 'name', 'title', 'slug', 'subject', 'pic_small', 'created_at', 'updated_at')
             ->where('status', self::Category_STATUS['publish'])
             ->where('category_type', $input['category_type'])
             ->skip($input['skip'])->take($input['take'])->get();
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'category_id');
     }
 }

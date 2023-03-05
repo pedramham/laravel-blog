@@ -10,29 +10,54 @@ class PostService
 {
     use ModelTrait;
 
+    public function show(array $input, $model)
+    {
+        return  $model::with('tags','category')->get()->find($input['id']);
+    }
+
     public function storePost(array $request): array
     {
         $post = $this->store($request, Post::class);
+        $this->storeTags($post, $request);
 
-        //if post not exist do not attach tags
-        if (!isset($request['tags'])){
-            return $post;
+        return array_merge(
+            $post->toArray(),
+            ['tags' => $request['tags'] ?? null]
+        );
+    }
+
+    public function updatePost(array $request): array
+    {
+        $this->edit($request, Post::class);
+        $post = Post::class::findOrFail($request['id']);
+
+        $this->storeTags($post, $request,true);
+
+        return array_merge(
+            $post->toArray(),
+            ['tags' => $request['tags'] ?? null]
+        );
+    }
+
+    public function storeTags($post, $request, $update = false): void
+    {
+        if (!isset($request['tags'])) {
+            return;
         }
 
-        foreach($request['tags'] as $tagName)
+        if ($update)
         {
+            $post->tags()->sync([]);
+        }
+
+        foreach ($request['tags'] as $tagName) {
             //find tag by name
-            $tag = Tag::where('name', $tagName)->first();
+            $tag = Tag::where('name', $tagName['name'])->first();
             //if tag not exist create new tag
-            if(!$tag)
-            {
+            if (!$tag) {
                 $tag = Tag::firstOrCreate(['name' => $tagName['name']]);
             }
-            //attach tag to post
             $post->tags()->attach($tag);
         }
-
-        //return post with tags
-        return array_merge($post->toArray(), ['tags' => $tag->toArray()]);
     }
 }
