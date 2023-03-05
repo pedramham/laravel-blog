@@ -9,7 +9,11 @@ class EditRequest extends BaseRequest
     {
         return array_merge(parent::rules(),
             [
-                'id' => 'integer|required|exists:categories,id'
+                'name' => 'string|nullable',
+                'title' => 'string|nullable',
+                'category_id' => 'integer|nullable|exists:categories,id',
+                'id' => 'integer|required|exists:posts,id',
+                'slug' => "alpha_dash|nullable|unique:posts,slug,$this->id",
             ]
         );
     }

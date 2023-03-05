@@ -12,9 +12,9 @@ trait ModelTrait
         return $model::create($input);
     }
 
-    public function edit(array $input, $model): bool
+    public function edit(array $input, $model)
     {
-        return  $model::whereId($input['id'])->update($input);
+        return  $model::findOrFail($input['id'])->update($input);
     }
 
     public function show(array $input, $model)
