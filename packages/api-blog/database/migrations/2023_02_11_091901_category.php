@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('status')->default('draft');
-            $table->text('subject');
-            $table->text('description');
+            $table->text('subject')->nullable();
+            $table->text('description')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
             $table->text('meta_language')->nullable();
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->integer('priority')->default(0);
             $table->boolean('menu_status')->default(0);
             $table->boolean('visible_index_status')->default(0);
-            $table->string('pic_small');
-            $table->string('pic_large');
+            $table->string('pic_small')->nullable();
+            $table->string('pic_large')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->timestamps();
         });
