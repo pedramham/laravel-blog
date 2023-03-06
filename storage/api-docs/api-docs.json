@@ -227,7 +227,7 @@
                                                     "name": "Post",
                                                     "title": "title Post",
                                                     "slug": "slug Post",
-                                                    "description": "description Post",
+                                                    "subject": "subject Post",
                                                     "pic_small": "pic_small Post",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
                                                     "created_at": "2023-02-19T07:39:12.000000Z",
@@ -237,7 +237,7 @@
                                                     "name": "Post",
                                                     "title": "title Post",
                                                     "slug": "slug Post",
-                                                    "description": "description Post",
+                                                    "subject": "subject Post",
                                                     "pic_small": "pic_small Post",
                                                     "updated_at": "2023-02-19T07:39:12.000000Z",
                                                     "created_at": "2023-02-19T07:39:12.000000Z",
@@ -280,35 +280,90 @@
                                     "slug"
                                 ],
                                 "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Post Name"
+                                    },
                                     "title": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Title"
+                                        "example": "Test Post Title"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post status"
                                     },
                                     "slug": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "test-article-title"
+                                        "example": "Test Slug status"
                                     },
                                     "subject": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Subject"
+                                        "example": "Test Post Subject"
                                     },
                                     "description": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Description"
+                                        "example": "Test Post Description"
                                     },
-                                    "pic-small": {
+                                    "meta_description": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Pic Small"
+                                        "example": "Test Post Meta Description"
                                     },
-                                    "pic-large": {
+                                    "meta_keywords": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Pic Large"
+                                        "example": "Test Post Meta Keywords"
+                                    },
+                                    "meta_language": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Meta Language"
+                                    },
+                                    "tweet_text": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Tweet Text"
+                                    },
+                                    "category_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Category Type"
+                                    },
+                                    "menu_order": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "pic_small": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Pic Small"
+                                    },
+                                    "pic_large": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Pic Large"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "100"
+                                    },
+                                    "menu_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "visible_index_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
                                     },
                                     "parent_id": {
                                         "type": "integer",
@@ -341,12 +396,22 @@
                                             "type": "array",
                                             "items": {},
                                             "example": {
-                                                "name": "category",
-                                                "title": "title category",
+                                                "name": "category name",
+                                                "title": "category post",
+                                                "status": "True",
                                                 "slug": "slug category",
-                                                "description": "description category",
-                                                "pic_small": "pic_small category",
-                                                "pic_large": "pic_large category",
+                                                "description": "description post",
+                                                "meta_description": "meta_description post",
+                                                "meta_keywords": "meta_keywords post",
+                                                "meta_language": "meta_language post",
+                                                "tweet_text": "tweet_text post",
+                                                "category_type": "category type",
+                                                "menu_order": "menu_order category",
+                                                "priority": "133",
+                                                "pic_small": "pic_small post",
+                                                "pic_large": "pic_large post",
+                                                "menu_status": "True",
+                                                "visible_index_status": "True",
                                                 "parent_id": "1",
                                                 "updated_at": "2023-02-19T07:39:12.000000Z",
                                                 "created_at": "2023-02-19T07:39:12.000000Z",
@@ -418,12 +483,22 @@
                                             "type": "array",
                                             "items": {},
                                             "example": {
-                                                "name": "category",
-                                                "title": "title category",
+                                                "name": "category name",
+                                                "title": "category post",
+                                                "status": "True",
                                                 "slug": "slug category",
-                                                "description": "description category",
-                                                "pic_small": "pic_small category",
-                                                "pic_large": "pic_large category",
+                                                "description": "description post",
+                                                "meta_description": "meta_description post",
+                                                "meta_keywords": "meta_keywords post",
+                                                "meta_language": "meta_language post",
+                                                "tweet_text": "tweet_text post",
+                                                "category_type": "category type",
+                                                "menu_order": "menu_order category",
+                                                "priority": "133",
+                                                "pic_small": "pic_small post",
+                                                "pic_large": "pic_large post",
+                                                "menu_status": "True",
+                                                "visible_index_status": "True",
                                                 "parent_id": "1",
                                                 "updated_at": "2023-02-19T07:39:12.000000Z",
                                                 "created_at": "2023-02-19T07:39:12.000000Z",
