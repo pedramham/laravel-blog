@@ -3,6 +3,7 @@
 use Admin\ApiBolg\Http\Controllers\Api\AuthorizationController;
 use Admin\ApiBolg\Http\Controllers\Api\CategoryController;
 use Admin\ApiBolg\Http\Controllers\Api\PostController;
+use Admin\ApiBolg\Http\Controllers\Api\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('soft-delete',[PostController::class, 'softDelete']);
         Route::delete('delete',[PostController::class, 'delete']);
         Route::put('restore-delete',[PostController::class, 'restoreDelete']);
+    });
+    Route::prefix('blog-api/setting/v1/')->group(function () {
+        Route::post('store',[SettingController::class, 'store']);
     });
 });
 
