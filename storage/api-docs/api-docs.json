@@ -816,6 +816,104 @@
                 }
             }
         },
+        "/blog-api/comment/v1/store": {
+            "post": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Store comment in DB",
+                "description": "Store comment in DB",
+                "operationId": "storeComment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "post_id",
+                                    "comments"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test name"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test email"
+                                    },
+                                    "post_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "comments": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test comments"
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Comment"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "name",
+                                                "email": "email",
+                                                "post_id": 1,
+                                                "comments": "comments",
+                                                "status": 1,
+                                                "updated_at": "2021-09-01T09:12:12.000000Z",
+                                                "created_at": "2021-09-01T09:12:12.000000Z",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/blog-api/post/v1/store": {
             "post": {
                 "tags": [

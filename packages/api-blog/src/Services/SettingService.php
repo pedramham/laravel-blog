@@ -11,11 +11,6 @@ class SettingService
 {
     use ModelTrait;
 
-    public function show(array $input, $model)
-    {
-        return $model::with('tags', 'category')->get()->find($input['id']);
-    }
-
     public function storeSetting(array $request): array
     {
         $record = Setting::where(['id' => 1]);

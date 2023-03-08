@@ -2,6 +2,7 @@
 
 use Admin\ApiBolg\Http\Controllers\Api\AuthorizationController;
 use Admin\ApiBolg\Http\Controllers\Api\CategoryController;
+use Admin\ApiBolg\Http\Controllers\Api\CommentController;
 use Admin\ApiBolg\Http\Controllers\Api\PostController;
 use Admin\ApiBolg\Http\Controllers\Api\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,15 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('delete',[PostController::class, 'delete']);
         Route::put('restore-delete',[PostController::class, 'restoreDelete']);
     });
+
+    Route::prefix('blog-api/comment/v1/')->group(function () {
+        Route::post('store',[CommentController::class, 'store']);
+    });
+
     Route::prefix('blog-api/setting/v1/')->group(function () {
         Route::post('store',[SettingController::class, 'store']);
     });
+
 });
 
 Route::post('/blog-api/auth/v1/register', [AuthorizationController::class, 'createUser']);
