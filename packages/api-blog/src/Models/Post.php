@@ -66,4 +66,31 @@ class Post extends Model
             ->where('post_type', $input['post_type'])
             ->skip($input['skip'])->take($input['take'])->get();
     }
+
+    /**
+     * Get the comments for the post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Override parent boot and Call deleting event
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // before delete() method call this and soft delete all comments related to this post
+        static::deleting(function($posts) {
+            Comment::withTrashed()->where('post_id', $posts->id)->delete();
+        });
+        // before restore() method call this and restore all comments related to this post
+        static::restoring(function($posts) {
+            Comment::withTrashed()->where('post_id', $posts->id)->restore();
+        });
+    }
 }
