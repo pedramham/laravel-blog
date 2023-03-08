@@ -4,7 +4,7 @@ namespace Admin\ApiBolg\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class ListRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -15,7 +15,8 @@ class CommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'integer|required|exists:comment,id',
+            'skip' => 'integer|required|min:0',
+            'take' => 'integer|required|min:1',
         ];
     }
 }

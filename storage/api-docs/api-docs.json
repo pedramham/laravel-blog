@@ -819,7 +819,7 @@
         "/blog-api/comment/v1/store": {
             "post": {
                 "tags": [
-                    "Setting"
+                    "Comment"
                 ],
                 "summary": "Store comment in DB",
                 "description": "Store comment in DB",
@@ -912,6 +912,303 @@
                         "apiAuth": []
                     }
                 ]
+            }
+        },
+        "/blog-api/comment/v1/edit": {
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Edit comment in DB",
+                "description": "Edit comment in DB",
+                "operationId": "edit-comment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test name"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test email"
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "comments": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test comments"
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {},
+                                        "example": {
+                                            "id": "1",
+                                            "name": "tag post"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "edit success"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/comment/v1/list": {
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "list comment",
+                "description": "list comment",
+                "operationId": "list-comment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "skip",
+                                    "take"
+                                ],
+                                "properties": {
+                                    "skip": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "0"
+                                    },
+                                    "take": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "Post Comment",
+                                                    "email": "test@test.test",
+                                                    "post_id": "1",
+                                                    "comments": "comment Post",
+                                                    "status": "0",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/comment/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Soft-delete Comment in DB",
+                "description": "Soft-delete Comment in DB",
+                "operationId": "soft-delete-comment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/comment/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "restore delete comment in DB",
+                "description": "when you delete comment in DB you can restore it",
+                "operationId": "restore-delete-comment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Restore delete"
+                    }
+                }
             }
         },
         "/blog-api/post/v1/store": {

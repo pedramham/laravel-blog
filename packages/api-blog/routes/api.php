@@ -17,32 +17,36 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->group( function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('blog-api/category/v1/')->group(function () {
-        Route::post('store',[CategoryController::class, 'store']);
-        Route::put('edit',[CategoryController::class, 'edit']);
-        Route::post('show',[CategoryController::class, 'show']);
-        Route::post('list',[CategoryController::class, 'list']);
-        Route::delete('soft-delete',[CategoryController::class, 'softDelete']);
-        Route::delete('delete',[CategoryController::class, 'delete']);
-        Route::put('restore-delete',[CategoryController::class, 'restoreDelete']);
+        Route::post('store', [CategoryController::class, 'store']);
+        Route::put('edit', [CategoryController::class, 'edit']);
+        Route::post('show', [CategoryController::class, 'show']);
+        Route::post('list', [CategoryController::class, 'list']);
+        Route::delete('soft-delete', [CategoryController::class, 'softDelete']);
+        Route::delete('delete', [CategoryController::class, 'delete']);
+        Route::put('restore-delete', [CategoryController::class, 'restoreDelete']);
     });
     Route::prefix('blog-api/post/v1/')->group(function () {
-        Route::post('store',[PostController::class, 'store']);
-        Route::put('edit',[PostController::class, 'edit']);
-        Route::post('list',[PostController::class, 'list']);
-        Route::post('show',[PostController::class, 'show']);
-        Route::delete('soft-delete',[PostController::class, 'softDelete']);
-        Route::delete('delete',[PostController::class, 'delete']);
-        Route::put('restore-delete',[PostController::class, 'restoreDelete']);
+        Route::post('store', [PostController::class, 'store']);
+        Route::put('edit', [PostController::class, 'edit']);
+        Route::post('list', [PostController::class, 'list']);
+        Route::post('show', [PostController::class, 'show']);
+        Route::delete('soft-delete', [PostController::class, 'softDelete']);
+        Route::delete('delete', [PostController::class, 'delete']);
+        Route::put('restore-delete', [PostController::class, 'restoreDelete']);
     });
 
     Route::prefix('blog-api/comment/v1/')->group(function () {
-        Route::post('store',[CommentController::class, 'store']);
+        Route::post('store', [CommentController::class, 'store']);
+        Route::put('edit', [CommentController::class, 'edit']);
+        Route::post('list', [CommentController::class, 'list']);
+        Route::delete('soft-delete', [CommentController::class, 'softDelete']);
+        Route::put('restore-delete', [CommentController::class, 'restoreDelete']);
     });
 
     Route::prefix('blog-api/setting/v1/')->group(function () {
-        Route::post('store',[SettingController::class, 'store']);
+        Route::post('store', [SettingController::class, 'store']);
     });
 
 });
