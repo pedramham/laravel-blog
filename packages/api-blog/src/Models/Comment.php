@@ -13,6 +13,11 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $hidden = [
+        'deleted_at',
+        'updated_at',
+    ];
+
     protected $table = 'comment';
 
     protected $fillable = [
@@ -26,6 +31,11 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public static function listPagination(array $input): Collection
+    {
+        return self::all()->skip($input['skip'])->take($input['take']);
     }
 
 }
