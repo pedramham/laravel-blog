@@ -2,6 +2,7 @@
 
 namespace Admin\ApiBolg\Http\Controllers\Api;
 
+use Admin\ApiBolg\Helper\FileHelper;
 use Admin\ApiBolg\Http\ApiBlogResponse;
 use Admin\ApiBolg\Http\Requests\Post\EditRequest;
 use Admin\ApiBolg\Http\Requests\Post\ListRequest;
@@ -17,9 +18,10 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class PostController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     private PostService $postService;
 
-    public function __construct(PostService $postService)
+    public function __construct(PostService $postService, FileHelper $fileService)
     {
         $this->postService = $postService;
     }
@@ -116,7 +118,6 @@ class PostController extends Controller
      *                              }
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -124,10 +125,9 @@ class PostController extends Controller
      */
     public function store(StoreRequest $request): ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->storePost($input),
+                $this->postService->storePost($request),
                 'Post created successfully',
                 true,
                 200
@@ -198,7 +198,6 @@ class PostController extends Controller
      *                          },
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -280,7 +279,6 @@ class PostController extends Controller
      *                             }
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -291,7 +289,7 @@ class PostController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->show($input,Post::class)
+                $this->postService->show($input, Post::class)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -365,12 +363,11 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error  edit"),
      *  )
      */
-    public function edit(EditRequest $request) : ApiBlogResponse
+    public function edit(EditRequest $request): ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->updatePost($input),
+                $this->postService->updatePost($request),
                 'Post edit successfully',
                 true,
                 200,
@@ -417,7 +414,6 @@ class PostController extends Controller
      *                         type="string",
      *                         example="true"
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  soft delete"),
@@ -428,7 +424,7 @@ class PostController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->softDelete($input,Post::class),
+                $this->postService->softDelete($input, Post::class),
                 200
             );
         } catch (\Exception $exception) {
@@ -470,7 +466,6 @@ class PostController extends Controller
      *                         type="string",
      *                         example="true"
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error Delete"),
@@ -478,10 +473,9 @@ class PostController extends Controller
      */
     public function delete(PostRequest $request): ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->delete($input,Post::class),
+                $this->postService->deletePost($request),
                 200
             );
         } catch (\Exception $exception) {
@@ -533,7 +527,7 @@ class PostController extends Controller
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->restoreDelete($input,Post::class),
+                $this->postService->restoreDelete($input, Post::class),
                 200
             );
         } catch (\Exception $exception) {
