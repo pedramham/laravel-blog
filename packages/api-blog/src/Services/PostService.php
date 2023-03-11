@@ -2,7 +2,7 @@
 
 namespace Admin\ApiBolg\Services;
 
-use Admin\ApiBolg\Helper\FileHelper;
+use Admin\ApiBolg\Facades\Files;
 use Admin\ApiBolg\Http\Requests\Post\EditRequest;
 use Admin\ApiBolg\Http\Requests\Post\PostRequest;
 use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
@@ -10,7 +10,7 @@ use Admin\ApiBolg\Models\Post;
 use Admin\ApiBolg\Models\Tag;
 use Admin\ApiBolg\Traits\ModelTrait;
 
-class PostService extends FileHelper
+class PostService
 {
     use ModelTrait;
 
@@ -42,7 +42,7 @@ class PostService extends FileHelper
 
         try {
             //name folder is declared according to the post_type
-            FileHelper::deleteFile($input['post_type'], $filename);
+            Files::deleteFile($input['post_type'], $filename);
             return $this->delete($input, Post::class);
 
         } catch (\Exception $e) {
@@ -94,7 +94,7 @@ class PostService extends FileHelper
     private function storeAndSetPic(StoreRequest|EditRequest $request, array $input): array
     {
         //post_type is used to name the folder where the images will be stored
-        $pics = FileHelper::storeFile($request->files, $input['post_type']);
+        $pics = Files::storeFile($request->files, $input['post_type']);
 
         //set the new name of the images in the input array to be stored in the database
         //we do this because the name of the images is generated randomly
@@ -113,7 +113,7 @@ class PostService extends FileHelper
 
         try {
             //If request has file pic_small or pic_large delete old file and store new file
-            FileHelper::deleteFile($input['post_type'], $filename);
+            Files::deleteFile($input['post_type'], $filename);
             return $this->storeAndSetPic($request, $input);
         } catch (\Exception $e) {
             return $e->getMessage();

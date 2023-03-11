@@ -4,9 +4,8 @@ namespace Admin\ApiBolg\Helper;
 
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\FileBag;
-use Illuminate\Support\Facades\Facade;
 
-class FileHelper extends Facade
+class FileHelper
 {
     protected static function getFacadeAccessor()
     {
