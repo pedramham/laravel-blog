@@ -51,13 +51,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [],
-            "providers": [
-                "Admin\\ApiBolg\\Providers\\ApiBolgServiceProvider"
-            ],
-            "aliases": {
-                "FileHelper": "Admin\\ApiBolg\\Helper\\FileHelper"
-            }
+            "dont-discover": []
         }
     },
     "config": {
