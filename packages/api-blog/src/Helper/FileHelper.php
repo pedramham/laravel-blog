@@ -2,12 +2,17 @@
 
 namespace Admin\ApiBolg\Helper;
 
-use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\FileBag;
+use Illuminate\Support\Facades\Facade;
 
-class FileHelper
+class FileHelper extends Facade
 {
+    protected static function getFacadeAccessor()
+    {
+        return 'fileHelper';
+    }
+
     const PATH = 'api-blog';
 
     public function storeFile(FileBag $request, string $path): array

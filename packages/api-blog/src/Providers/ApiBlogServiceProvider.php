@@ -2,6 +2,7 @@
 
 namespace Admin\ApiBolg\Providers;
 
+use Admin\ApiBolg\Helper\FileHelper;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,9 @@ class ApiBlogServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('fileHelper', function($app) {
+            return new FileHelper();
+        });
     }
 
     /**
