@@ -14,7 +14,6 @@ class PostService extends FileHelper
 {
     use ModelTrait;
 
-
     public function show(array $input, $model)
     {
         return $model::with('tags', 'category')->get()->find($input['id']);
@@ -43,7 +42,7 @@ class PostService extends FileHelper
 
         try {
             //name folder is declared according to the post_type
-            $this->deleteFile($input['post_type'], $filename);
+            FileHelper::deleteFile($input['post_type'], $filename);
             return $this->delete($input, Post::class);
 
         } catch (\Exception $e) {
@@ -95,7 +94,7 @@ class PostService extends FileHelper
     private function storeAndSetPic(StoreRequest|EditRequest $request, array $input): array
     {
         //post_type is used to name the folder where the images will be stored
-        $pics = $this->storeFile($request->files, $input['post_type']);
+        $pics = FileHelper::storeFile($request->files, $input['post_type']);
 
         //set the new name of the images in the input array to be stored in the database
         //we do this because the name of the images is generated randomly
@@ -114,7 +113,7 @@ class PostService extends FileHelper
 
         try {
             //If request has file pic_small or pic_large delete old file and store new file
-            $this->deleteFile($input['post_type'], $filename);
+            FileHelper::deleteFile($input['post_type'], $filename);
             return $this->storeAndSetPic($request, $input);
         } catch (\Exception $e) {
             return $e->getMessage();

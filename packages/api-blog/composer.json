@@ -12,5 +12,15 @@
             "email": "morteza@shapeandshif.dev"
         }
     ],
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Admin\\ApiBolg\\Providers\\ApiBolgServiceProvider"
+            ],
+            "aliases": {
+                "FileHelper": "Admin\\ApiBolg\\Helper\\FileHelper"
+            }
+        }
+    }
 }
