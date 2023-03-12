@@ -8,11 +8,14 @@ use Admin\ApiBolg\Http\Requests\Post\PostRequest;
 use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
 use Admin\ApiBolg\Models\Post;
 use Admin\ApiBolg\Models\Tag;
+use Admin\ApiBolg\Traits\HelperTrait;
 use Admin\ApiBolg\Traits\ModelTrait;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class PostService
 {
     use ModelTrait;
+    use HelperTrait;
 
     public function show(array $input, $model)
     {
@@ -22,7 +25,7 @@ class PostService
     public function storePost(StoreRequest $request): array
     {
         $input = $request->validated();
-        $input = $this->storeAndSetPic($request, $input);
+        $input = Files::storeFile($request->files ,$input, $input['post_type']);
 
         $post = $this->store($input, Post::class);
         $this->storeTags($post, $input);
@@ -36,30 +39,22 @@ class PostService
 
     public function deletePost(PostRequest $request): string|bool
     {
-        //Get filename pic_large and pic_small from post
-        $filename = Post::withTrashed()->find($request['id'])->only('pic_large', 'pic_small');
         $input = $request->validated();
-
-        try {
-            //name folder is declared according to the post_type
-            Files::deleteFile($input['post_type'], $filename);
-            return $this->delete($input, Post::class);
-
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-
+        return $this->deleteModelWithFiles(Post::class, $input, $input['post_type']);
     }
 
     public function updatePost(EditRequest $request): string|array
     {
+
         $input = $request->validated();
         $post = Post::class::findOrFail($input['id']);
+        //get filename pic_large and pic_small from post to delete old file
         $filename = $post->only('pic_large', 'pic_small');
-
-        $input = $this->updateFiles($request, $input, $filename);
-
+        //delete old file and upload new file in storage
+        $input = $this->updatePotFiles($request->files, $input, $filename);
+        //after delete old file and upload new file in storage update post
         $this->edit($input, $post);
+        //update tags related to post
         $this->storeTags($post, $input, true);
         //return post with tags
         return array_merge(
@@ -91,32 +86,9 @@ class PostService
         }
     }
 
-    private function storeAndSetPic(StoreRequest|EditRequest $request, array $input): array
+
+    private function updatePotFiles(FileBag $request,array $input,array $filename): array|string
     {
-        //post_type is used to name the folder where the images will be stored
-        $pics = Files::storeFile($request->files, $input['post_type']);
-
-        //set the new name of the images in the input array to be stored in the database
-        //we do this because the name of the images is generated randomly
-        foreach ($pics as $key => $pic) {
-            $input[$key] = $pic ?? null;
-        }
-        return $input;
-    }
-
-    private function updateFiles($request, $input, $filename): array|string
-    {
-        //if request not has file pic_small or pic_large return input
-        if (!$request->hasFile('pic_small') || !$request->hasFile('pic_large')) {
-            return $input;
-        }
-
-        try {
-            //If request has file pic_small or pic_large delete old file and store new file
-            Files::deleteFile($input['post_type'], $filename);
-            return $this->storeAndSetPic($request, $input);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        return $this->updateFile($request, $input, $filename, $input['post_type']);
     }
 }

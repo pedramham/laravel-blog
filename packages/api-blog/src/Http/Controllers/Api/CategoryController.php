@@ -187,10 +187,9 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request): ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->store($input,Category::class),
+                $this->categoryService->storeCategory($request),
                 'Category created successfully',
                 true,
                 200
@@ -341,10 +340,9 @@ class CategoryController extends Controller
      */
     public function edit(EditRequest $request) : ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->edit($input,Category::class)
+                $this->categoryService->updateCategory($request)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -447,10 +445,9 @@ class CategoryController extends Controller
      */
     public function delete(CategoryRequest $request): ApiBlogResponse
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->delete($input,Category::class),
+                $this->categoryService->deleteCategory($request),
                 200
             );
         } catch (\Exception $exception) {
