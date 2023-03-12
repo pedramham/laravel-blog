@@ -22,7 +22,7 @@ class BaseRequest extends FormRequest
             'meta_keywords' => 'string|nullable',
             'meta_language' => 'string|nullable',
             'tweet_text' => 'string|nullable',
-            'post_type' => 'string|nullable',
+            'post_type' => 'string|required',
             'menu_order' => 'integer|nullable',
             'priority' => 'integer|nullable',
             'comment_status' => 'bool|nullable',

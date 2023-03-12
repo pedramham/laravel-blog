@@ -38,7 +38,7 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"title", "slug"},
+     *            required={"title", "slug", "post_type"},
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
@@ -51,23 +51,28 @@ class PostController extends Controller
      *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
      *            @OA\Property(property="post_type", type="string", format="string", example="Test Post Post Type"),
      *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
-     *            @OA\Property(property="pic_small", type="string", format="string", example="Test Post Pic Small"),
-     *            @OA\Property(property="pic_large", type="string", format="string", example="Test Post Pic Large"),
      *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
      *            @OA\Property(property="comment_status", type="boolean", format="boolean", example="true"),
      *            @OA\Property(property="menu_status", type="boolean", format="boolean", example="true"),
      *            @OA\Property(property="visible_index_status", type="boolean", format="boolean", example="true"),
      *            @OA\Property(property="category_id", type="integer", format="integer", example="1"),
-     *                @OA\Property(
-     *                    property="tags",
-     *                    type="array",
-     *                    @OA\Items,
+     *            @OA\Property(
+     *                  property="tags",
+     *                  type="array",
+     *                  @OA\Items,
      *                      example={
      *                      "id": "1",
      *                      "name": "tag post",
      *                   },
      *                )
      *         ),
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(description="file to upload", property="pic_small", type="file", format="file"),
+     *                 @OA\Property(description="file to upload", property="pic_large", type="file", format="file"),
+     *             )
+     *         )
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -307,7 +312,7 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id"},
+     *            required={"id", "post_type"},
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
@@ -320,8 +325,6 @@ class PostController extends Controller
      *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
      *            @OA\Property(property="post_type", type="string", format="string", example="Test Post Post Type"),
      *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
-     *            @OA\Property(property="pic_small", type="string", format="string", example="Test Post Pic Small"),
-     *            @OA\Property(property="pic_large", type="string", format="string", example="Test Post Pic Large"),
      *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
      *            @OA\Property(property="comment_status", type="boolean", format="boolean", example="true"),
      *            @OA\Property(property="menu_status", type="boolean", format="boolean", example="true"),
@@ -337,6 +340,13 @@ class PostController extends Controller
      *                   },
      *                )
      *           ),
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(description="file to upload", property="pic_small", type="file", format="file"),
+     *                 @OA\Property(description="file to upload", property="pic_large", type="file", format="file"),
+     *             )
+     *         )
      *       ),
      *      @OA\Response(
      *          response="200",
