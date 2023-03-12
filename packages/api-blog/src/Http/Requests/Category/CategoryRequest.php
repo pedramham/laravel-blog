@@ -16,6 +16,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'id' => 'integer|required|exists:categories,id',
+            'category_type' => 'string|required',
         ];
     }
 }
