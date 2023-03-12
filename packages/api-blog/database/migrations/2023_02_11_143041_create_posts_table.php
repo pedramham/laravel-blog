@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('meta_keywords')->nullable();
             $table->text('meta_language')->nullable();
             $table->text('tweet_text')->nullable();
-            $table->string('post_type')->nullable();
+            $table->string('post_type');
             $table->integer('menu_order')->nullable();
             $table->string('pic_small')->nullable();
             $table->string('pic_large')->nullable();

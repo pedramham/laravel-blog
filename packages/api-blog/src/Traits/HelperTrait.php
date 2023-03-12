@@ -26,8 +26,8 @@ trait HelperTrait
     public function updateFile(FileBag $request, array $input, array $filename, string $type): array|string
     {
 
-        //if request not has file pic_small or pic_large return input
-        if (!$request->get('pic_small') && !$request->get('pic_large')) {
+        //if request not have files return input
+        if (empty($request->all())) {
             return $input;
         }
 

@@ -273,6 +273,23 @@
                 "requestBody": {
                     "required": true,
                     "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
                         "application/json": {
                             "schema": {
                                 "required": [
@@ -333,22 +350,12 @@
                                     "category_type": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Category Type"
+                                        "example": "article"
                                     },
                                     "menu_order": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "1"
-                                    },
-                                    "pic_small": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Small"
-                                    },
-                                    "pic_large": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Large"
                                     },
                                     "priority": {
                                         "type": "integer",
@@ -492,7 +499,7 @@
                                                 "meta_keywords": "meta_keywords post",
                                                 "meta_language": "meta_language post",
                                                 "tweet_text": "tweet_text post",
-                                                "category_type": "category type",
+                                                "category_type": "article",
                                                 "menu_order": "menu_order category",
                                                 "priority": "133",
                                                 "pic_small": "pic_small post",
@@ -533,16 +540,39 @@
                 "requestBody": {
                     "required": true,
                     "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "category_type"
                                 ],
                                 "properties": {
                                     "id": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "2"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Category Name"
                                     },
                                     "title": {
                                         "type": "string",
@@ -564,15 +594,50 @@
                                         "format": "string",
                                         "example": "Test Article Description"
                                     },
-                                    "pic-small": {
+                                    "meta_description": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Pic Small"
+                                        "example": "Test Article Meta Description"
                                     },
-                                    "pic-large": {
+                                    "meta_keywords": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test Article Pic Large"
+                                        "example": "Test Article Meta Keywords"
+                                    },
+                                    "meta_language": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Meta Language"
+                                    },
+                                    "tweet_text": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Article Tweet Text"
+                                    },
+                                    "category_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "article"
+                                    },
+                                    "menu_order": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "menu_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "visible_index_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
                                     },
                                     "parent_id": {
                                         "type": "integer",
@@ -1222,11 +1287,29 @@
                 "requestBody": {
                     "required": true,
                     "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "title",
-                                    "slug"
+                                    "slug",
+                                    "post_type"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1288,16 +1371,6 @@
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "1"
-                                    },
-                                    "pic_small": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Small"
-                                    },
-                                    "pic_large": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Large"
                                     },
                                     "priority": {
                                         "type": "integer",
@@ -1604,10 +1677,28 @@
                 "requestBody": {
                     "required": true,
                     "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "post_type"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1669,16 +1760,6 @@
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "1"
-                                    },
-                                    "pic_small": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Small"
-                                    },
-                                    "pic_large": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Pic Large"
                                     },
                                     "priority": {
                                         "type": "integer",
