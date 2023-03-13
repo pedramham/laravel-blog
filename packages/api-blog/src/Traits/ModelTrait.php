@@ -14,42 +14,42 @@ trait ModelTrait
 
     public function edit(array $input, $model)
     {
-        return  $model::findOrFail($input['id'])->update($input);
+        return $model::findOrFail($input['id'])->update($input);
     }
 
     public function show(array $input, $model)
     {
-        return  $model::find($input['id']);
+        return $model::find($input['id']);
     }
 
     public function listPagination($model, $input): Collection
     {
-        return  $model::listPagination($input);
+        return $model::listPagination($input);
     }
 
     public function softDelete(array $input, $model): bool
     {
-        $id =  $model::find(($input['id']));
+        $id = $model::find(($input['id']));
         if ($id) {
-           return  $id->delete();
+            return $id->delete();
         }
         return false;
     }
 
     public function delete(array $input, $model): bool
     {
-        $id =  $model::withTrashed()->find($input['id']);
+        $id = $model::withTrashed()->find($input['id']);
         if ($id) {
-            return  $id->forceDelete();
+            return $id->forceDelete();
         }
         return false;
     }
 
     public function restoreDelete(array $input, $model): bool
     {
-        $id =  $model::withTrashed()->find($input['id']);
+        $id = $model::withTrashed()->find($input['id']);
         if ($id) {
-            return  $id->restore();
+            return $id->restore();
         }
         return false;
     }

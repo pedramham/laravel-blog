@@ -130,9 +130,10 @@ class PostController extends Controller
      */
     public function store(StoreRequest $request): ApiBlogResponse
     {
+        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->storePost($request),
+                $this->postService->storePost($input),
                 'Post created successfully',
                 true,
                 200
@@ -375,9 +376,10 @@ class PostController extends Controller
      */
     public function edit(EditRequest $request): ApiBlogResponse
     {
+        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->postService->updatePost($request),
+                $this->postService->updatePost($input),
                 'Post edit successfully',
                 true,
                 200,

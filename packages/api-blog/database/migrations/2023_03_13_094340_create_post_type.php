@@ -8,17 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        //Many to Many relationship between posts and tags
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('post_type', function (Blueprint $table) {
             $table->increments('id');
             $table->softDeletes();
             $table->integer('post_id')->nullable()->unsigned()->index();
-            $table->integer('tag_id')->nullable()->unsigned()->index();
+            $table->integer('video_id')->nullable()->unsigned()->index();
             $table->timestamps();
 
             // Set
@@ -28,10 +25,10 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // Set FK tagspivot --- tags
-            $table->foreign('tag_id')
+            // Set FK tagspivot --- videos
+            $table->foreign('video_id')
                 ->references('id')
-                ->on('tags')
+                ->on('videos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
@@ -39,12 +36,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('post_tag');
-
+        Schema::dropIfExists('post_type');
     }
 };

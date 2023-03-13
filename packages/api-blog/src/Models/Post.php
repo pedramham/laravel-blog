@@ -54,6 +54,12 @@ class Post extends Model
         return $this->belongsToMany(Tag::class)->as('tags');
     }
 
+    //relation with video table
+    public function videos(): BelongsToMany
+    {
+        return $this->belongsToMany(Video::class,'post_type','post_id','video_id')->as('videos');
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -85,11 +91,11 @@ class Post extends Model
         parent::boot();
 
         // before delete() method call this and soft delete all comments related to this post
-        static::deleting(function($posts) {
+        static::deleting(function ($posts) {
             Comment::withTrashed()->where('post_id', $posts->id)->delete();
         });
         // before restore() method call this and restore all comments related to this post
-        static::restoring(function($posts) {
+        static::restoring(function ($posts) {
             Comment::withTrashed()->where('post_id', $posts->id)->restore();
         });
     }

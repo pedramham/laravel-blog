@@ -28,12 +28,17 @@ class BaseRequest extends FormRequest
             'comment_status' => 'bool|nullable',
             'menu_status' => 'bool|nullable',
             'visible_index_status' => 'bool|nullable',
-            'pic_small' => 'nullable|mimes:jpeg,jpg,webp|max:10000',
-            'pic_large' => 'nullable|mimes:jpeg,jpg,png,webp|max:99000',
+            'media.pic_small' => 'nullable|mimes:jpeg,jpg,webp|max:10000',
+            'media.pic_large' => 'nullable|mimes:jpeg,jpg,png,webp|max:99000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'array|nullable',
             'tags.id.*' => 'required|exists:tags,id',
             'tags.name.*' => 'required|unique:tags',
+            'video' => 'array|nullable',
+            'video.url.*' => 'required_if:file|url',
+            'video.file.*' => 'required_if:url|file',
+            'video.likes.*' => 'nullable|integer',
+            'video.views.*' => 'nullable|integer',
         ];
     }
 }

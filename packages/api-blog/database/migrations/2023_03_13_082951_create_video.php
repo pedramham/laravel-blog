@@ -8,27 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
             $table->softDeletes();
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('file')->nullable();
+            $table->string('url')->nullable();
+            $table->integer('likes')->default(0);
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('videos');
     }
 };
