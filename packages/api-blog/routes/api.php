@@ -5,6 +5,7 @@ use Admin\ApiBolg\Http\Controllers\Api\CategoryController;
 use Admin\ApiBolg\Http\Controllers\Api\CommentController;
 use Admin\ApiBolg\Http\Controllers\Api\PostController;
 use Admin\ApiBolg\Http\Controllers\Api\SettingController;
+use Admin\ApiBolg\Http\Controllers\Api\VideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('soft-delete', [PostController::class, 'softDelete']);
         Route::delete('delete', [PostController::class, 'delete']);
         Route::put('restore-delete', [PostController::class, 'restoreDelete']);
+    });
+
+    Route::prefix('blog-api/video/v1/')->group(function () {
+        Route::post('store', [VideoController::class, 'store']);
     });
 
     Route::prefix('blog-api/comment/v1/')->group(function () {

@@ -8,6 +8,7 @@ use Admin\ApiBolg\Http\Requests\Post\PostRequest;
 use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
 use Admin\ApiBolg\Models\Post;
 use Admin\ApiBolg\Models\Tag;
+use Admin\ApiBolg\Models\Video;
 use Admin\ApiBolg\Traits\HelperTrait;
 use Admin\ApiBolg\Traits\ModelTrait;
 use Symfony\Component\HttpFoundation\FileBag;
@@ -19,17 +20,19 @@ class PostService
 
     public function show(array $input, $model)
     {
-        return $model::with('tags', 'category')->get()->find($input['id']);
+        return $model::with('tags', 'category', 'videos')->get()->find($input['id']);
     }
 
-    public function storePost(StoreRequest $request): array
+    public function storePost(array $input): array
     {
-        $input = $request->validated();
-        $input = Files::storeFile($request->files ,$input, $input['post_type']);
+        //if request has media upload file in storage
+        if (isset($input['media'])) {
+            $input = Files::storeFile($input['media'], $input['post_type']);
+        }
 
         $post = $this->store($input, Post::class);
         $this->storeTags($post, $input);
-
+        $this->storeVideo($post, $input);
         return array_merge(
             $post->toArray(),
             ['tags' => $input['tags'] ?? null]
@@ -43,15 +46,18 @@ class PostService
         return $this->deleteModelWithFiles(Post::class, $input, $input['post_type']);
     }
 
-    public function updatePost(EditRequest $request): string|array
+    public function updatePost(array $input): string|array
     {
 
-        $input = $request->validated();
         $post = Post::class::findOrFail($input['id']);
         //get filename pic_large and pic_small from post to delete old file
-        $filename = $post->only('pic_large', 'pic_small');
-        //delete old file and upload new file in storage
-        $input = $this->updatePotFiles($request->files, $input, $filename);
+        $filename = $post->only('pic_large', 'pic_small', 'file');
+
+        //if request has media delete old file and upload new file in storage
+        if (isset($input['media'])) {
+            $input = array_merge($input, $this->updatePostFiles($input, $filename));
+        }
+
         //after delete old file and upload new file in storage update post
         $this->edit($input, $post);
         //update tags related to post
@@ -86,9 +92,24 @@ class PostService
         }
     }
 
-
-    private function updatePotFiles(FileBag $request,array $input,array $filename): array|string
+    public function storeVideo(Post $post, array $request, bool $update = false): void
     {
-        return $this->updateFile($request, $input, $filename, $input['post_type']);
+        //if request not has video return null
+        if (!isset($request['video'])) {
+            return;
+        }
+
+        if ($update) {
+            $post->videos()->sync([]);
+        }
+
+        $video = Video::create(reset($request['video']));
+        $post->videos()->attach($video);
+
+    }
+
+    private function updatePostFiles(array $input, array $filename): array|string
+    {
+        return $this->updateFile($input['media'], $filename, $input['post_type']);
     }
 }

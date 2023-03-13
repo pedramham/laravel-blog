@@ -14,11 +14,11 @@ class  FileHelper implements FileHelperInterface
 
     const PATH = 'api-blog';
 
-    public function storeFile(FileBag $request, array $input, $path): array
+    public function storeFile(array $input, $path): array
     {
         //path is the folder where the images are stored
         $path = self::PATH . '/' . $path;
-        $pics = $this->UploadFile($request, $path);
+        $pics = $this->UploadFile($input, $path);
         //set the new name of the images in the input array to be stored in the database
         //we do this because the name of the images is generated randomly
         foreach ($pics as $key => $pic) {
@@ -28,7 +28,7 @@ class  FileHelper implements FileHelperInterface
         return $input;
     }
 
-    private function UploadFile($request, string $path): array
+    private function UploadFile(array $request, string $path): array
     {
         $files = [];
 
