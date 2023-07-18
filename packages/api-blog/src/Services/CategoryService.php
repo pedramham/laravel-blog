@@ -17,38 +17,31 @@ class CategoryService
     use ModelTrait;
     use HelperTrait;
 
-    public function storeCategory(StoreRequest $request): array
+    public function storeCategory(array $input): array
     {
-        $input = $request->validated();
-        $input = Files::storeFile($request->files, $input, $input['category_type']);
+        $input = Files::storeFile($input);
         $post = $this->store($input, Category::class);
         return $post->toArray();
     }
 
-    public function updateCategory(EditRequest $request): string|array
+    public function updateCategory(array $input): string|array
     {
 
-        $input = $request->validated();
         $category = Category::class::findOrFail($input['id']);
         //get filename pic_large and pic_small from category to delete old file
-        $filename = $category->only('pic_large', 'pic_small');
+        $filenames = $category->only('pic_large', 'pic_small');
         //delete old file and upload new file in storage
-        $input = $this->updateCategoryFiles($request->files, $input, $filename);
+        $input = $this->updateFile($input, $filenames);
+      
         //after delete old file and upload new file in storage update post
         $this->edit($input, $category);
         //return post with tags
         return $category->toArray();
     }
 
-    public function deleteCategory(CategoryRequest $request): string|bool
+    public function deleteCategory(array $input): string|bool
     {
-        $input = $request->validated();
-        return $this->deleteModelWithFiles(Category::class, $input, $input['category_type']);
-    }
-
-    private function updateCategoryFiles(FileBag $request, array $input, array $filename): array|string
-    {
-        $this->updateFile($request, $input, $filename, $input['category_type']);
+        return $this->deleteModelWithFiles(Category::class, $input);
     }
 
 }

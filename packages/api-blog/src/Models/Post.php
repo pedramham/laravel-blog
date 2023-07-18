@@ -21,7 +21,7 @@ class Post extends Model
         'private' => 'private',
     ];
 
-    const POST_TYPE = [
+    const issue_type = [
         'article' => 'article',
         'news' => 'news',
         'page' => 'page',
@@ -38,7 +38,7 @@ class Post extends Model
         'meta_keywords',
         'meta_language',
         'tweet_text',
-        'post_type',
+        'issue_type',
         'menu_order',
         'pic_small',
         'pic_large',
@@ -57,7 +57,7 @@ class Post extends Model
     //relation with video table
     public function videos(): BelongsToMany
     {
-        return $this->belongsToMany(Video::class,'post_type','post_id','video_id')->as('videos');
+        return $this->belongsToMany(Video::class,'issue_type','post_id','video_id')->as('videos');
     }
 
     public function category(): BelongsTo
@@ -69,7 +69,7 @@ class Post extends Model
     {
         return self::select('id', 'name', 'title', 'slug', 'subject', 'pic_small', 'created_at', 'updated_at')
             ->where('status', self::POST_STATUS['publish'])
-            ->where('post_type', $input['post_type'])
+            ->where('issue_type', $input['issue_type'])
             ->skip($input['skip'])->take($input['take'])->get();
     }
 

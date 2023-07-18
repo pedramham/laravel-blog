@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Facade;
 use Symfony\Component\HttpFoundation\FileBag;
 
 /**
- * @method static array storeFile(array $input, string $path)
- * @method static void deleteFile(string $typeFolder, array $filenames)
+ * @method static array storeFile(array $input)
+ * @method static void deleteFile(array $input, string $issueType)
  */
 class Files extends Facade
 {

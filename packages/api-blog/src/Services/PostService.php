@@ -25,11 +25,9 @@ class PostService
 
     public function storePost(array $input): array
     {
-        //if request has media upload file in storage
-        if (isset($input['media'])) {
-            $input = Files::storeFile($input['media'], $input['post_type']);
-        }
-
+     
+        $input = Files::storeFile($input);
+      //  dd($input);
         $post = $this->store($input, Post::class);
         $this->storeTags($post, $input);
         $this->storeVideo($post, $input);
@@ -43,7 +41,7 @@ class PostService
     public function deletePost(PostRequest $request): string|bool
     {
         $input = $request->validated();
-        return $this->deleteModelWithFiles(Post::class, $input, $input['post_type']);
+        return $this->deleteModelWithFiles(Post::class, $input);
     }
 
     public function updatePost(array $input): string|array
@@ -52,11 +50,19 @@ class PostService
         $post = Post::class::findOrFail($input['id']);
         //get filename pic_large and pic_small from post to delete old file
         $filename = $post->only('pic_large', 'pic_small', 'file');
-
-        //if request has media delete old file and upload new file in storage
-        if (isset($input['media'])) {
-            $input = array_merge($input, $this->updatePostFiles($input, $filename));
+  
+        if (isset($input['video']['file'])) {
+            if(!isset($input['media']))
+            { 
+                $input['media'] = [];
+              
+            }
+            $input['media'] = array_merge($input['media'], $input['video']);
+        
         }
+        dd($input);
+        $input = array_merge($input, $this->updateFile($input, $filename));
+  
 
         //after delete old file and upload new file in storage update post
         $this->edit($input, $post);
@@ -69,18 +75,18 @@ class PostService
         );
     }
 
-    public function storeTags(Post $post, array $request, bool $update = false): void
+    public function storeTags(Post $post, array $input, bool $update = false): void
     {
         //if request not has tags return null
-        if (!isset($request['tags'])) {
+        if (!isset($input['tags'])) {
             return;
         }
 
         if ($update) {
             $post->tags()->sync([]);
         }
-
-        foreach ($request['tags'] as $tagName) {
+    
+        foreach ($input['tags'] as $tagName) {
             //find tag by name
             $tag = Tag::where('name', $tagName['name'])->first();
             //if tag not exist create new tag
@@ -92,24 +98,24 @@ class PostService
         }
     }
 
-    public function storeVideo(Post $post, array $request, bool $update = false): void
+    public function storeVideo(Post $post, array $input, bool $update = false): void
     {
         //if request not has video return null
-        if (!isset($request['video'])) {
-            return;
-        }
-
+        if ( !isset($input['file']) && !isset(['media']['video']['url']) && !isset(['media']['video'])) return;  
+    
         if ($update) {
             $post->videos()->sync([]);
         }
-
-        $video = Video::create(reset($request['video']));
+        
+        $input=[
+           'likes' => $input['media']['video']['likes']?? 0,
+           'views' => $input['media']['video']['views'] ?? 0,
+           'file'  => $input['file'] ?? null,
+           'url'  => $input['media']['video']['url'] ?? null,
+        ];
+     
+        $video = Video::create($input);
         $post->videos()->attach($video);
 
-    }
-
-    private function updatePostFiles(array $input, array $filename): array|string
-    {
-        return $this->updateFile($input['media'], $filename, $input['post_type']);
     }
 }

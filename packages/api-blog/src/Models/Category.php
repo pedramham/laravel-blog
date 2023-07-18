@@ -19,7 +19,7 @@ class Category extends Model
         'private' => 'private',
     ];
 
-    const Category_TYPE = [
+    const issue_type = [
         'article' => 'article',
         'news' => 'news',
         'page' => 'page',
@@ -36,7 +36,7 @@ class Category extends Model
         'meta_keywords',
         'meta_language',
         'tweet_text',
-        'category_type',
+        'issue_type',
         'menu_order',
         'priority',
         'menu_status',
@@ -51,7 +51,7 @@ class Category extends Model
     {
         return self::select('id', 'name', 'title', 'slug', 'subject', 'pic_small', 'created_at', 'updated_at')
             ->where('status', self::Category_STATUS['publish'])
-            ->where('category_type', $input['category_type'])
+            ->where('issue_type', $input['issue_type'])
             ->skip($input['skip'])->take($input['take'])->get();
     }
 
