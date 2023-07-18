@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('meta_keywords')->nullable();
             $table->text('meta_language')->nullable();
             $table->text('tweet_text')->nullable();
-            $table->string('category_type');
+            $table->string('issue_type');
             $table->integer('menu_order')->nullable();
             $table->integer('priority')->default(0);
             $table->boolean('menu_status')->default(0);

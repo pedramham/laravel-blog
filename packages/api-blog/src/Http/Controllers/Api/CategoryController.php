@@ -35,10 +35,10 @@ class CategoryController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"skip","take", "post_type"},
+     *            required={"skip","take", "issue_type"},
      *            @OA\Property(property="skip", type="integer", format="integer", example="0"),
      *            @OA\Property(property="take", type="integer", format="integer", example="10"),
-     *            @OA\Property(property="post_type", type="string", format="string", example="article"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="article"),
      *         ),
      *      ),
      *      @OA\Response(
@@ -113,25 +113,6 @@ class CategoryController extends Controller
      *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
-     *            required={"title", "slug"},
-     *            @OA\Property(property="name", type="string", format="string", example="Post Name"),
-     *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
-     *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
-     *            @OA\Property(property="slug", type="string", format="string", example="Test Slug status"),
-     *            @OA\Property(property="subject", type="string", format="string", example="Test Post Subject"),
-     *            @OA\Property(property="description", type="string", format="string", example="Test Post Description"),
-     *            @OA\Property(property="meta_description", type="string", format="string", example="Test Post Meta Description"),
-     *            @OA\Property(property="meta_keywords", type="string", format="string", example="Test Post Meta Keywords"),
-     *            @OA\Property(property="meta_language", type="string", format="string", example="Test Post Meta Language"),
-     *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
-     *            @OA\Property(property="category_type", type="string", format="string", example="article"),
-     *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
-     *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
-     *            @OA\Property(property="menu_status", type="boolean", format="boolean", example="true"),
-     *            @OA\Property(property="visible_index_status", type="boolean", format="boolean", example="true"),
-     *            @OA\Property(property="parent_id", type="integer", format="integer", example="1"),
-     *         ),
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
@@ -171,13 +152,13 @@ class CategoryController extends Controller
      *                         "meta_language": "meta_language post",
      *                         "tweet_text": "tweet_text post",
      *                         "tweet_text": "tweet_text post",
-     *                         "category_type": "category type",
-     *                         "menu_order": "menu_order category",
+     *                         "issue_type": "type",
+     *                         "menu_order": 1,
      *                         "priority": "133",
      *                         "pic_small": "pic_small post",
      *                         "pic_large": "pic_large post",
-     *                         "menu_status": "True",
-     *                         "visible_index_status": "True",
+     *                         "menu_status": True,
+     *                         "visible_index_status": True,
      *                         "parent_id": "1",
      *                         "updated_at": "2023-02-19T07:39:12.000000Z",
      *                         "created_at": "2023-02-19T07:39:12.000000Z",
@@ -192,9 +173,10 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request): ApiBlogResponse
     {
+        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->storeCategory($request),
+                $this->categoryService->storeCategory($input),
                 'Category created successfully',
                 true,
                 200
@@ -251,7 +233,7 @@ class CategoryController extends Controller
      *                         "meta_language": "meta_language post",
      *                         "tweet_text": "tweet_text post",
      *                         "tweet_text": "tweet_text post",
-     *                         "category_type": "article",
+     *                         "issue_type": "article",
      *                         "menu_order": "menu_order category",
      *                         "priority": "133",
      *                         "pic_small": "pic_small post",
@@ -293,7 +275,7 @@ class CategoryController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id","category_type"},
+     *            required={"id","issue_type"},
      *            @OA\Property(property="id", type="integer", format="integer", example="2"),
      *            @OA\Property(property="name", type="string", format="string", example="Test Category Name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Article Title"),
@@ -304,7 +286,7 @@ class CategoryController extends Controller
      *            @OA\Property(property="meta_keywords", type="string", format="string", example="Test Article Meta Keywords"),
      *            @OA\Property(property="meta_language", type="string", format="string", example="Test Article Meta Language"),
      *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Article Tweet Text"),
-     *            @OA\Property(property="category_type", type="string", format="string", example="article"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="article"),
      *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
      *            @OA\Property(property="priority", type="integer", format="integer", example="1"),
      *            @OA\Property(property="menu_status", type="boolean", format="boolean", example="true"),
@@ -360,9 +342,11 @@ class CategoryController extends Controller
      */
     public function edit(EditRequest $request) : ApiBlogResponse
     {
+        $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
-                $this->categoryService->updateCategory($request)
+                $this->categoryService->updateCategory($input)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -465,9 +449,10 @@ class CategoryController extends Controller
      */
     public function delete(CategoryRequest $request): ApiBlogResponse
     {
+        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->deleteCategory($request),
+                $this->categoryService->deleteCategory($input),
                 200
             );
         } catch (\Exception $exception) {

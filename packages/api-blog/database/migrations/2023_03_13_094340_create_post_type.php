@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_type', function (Blueprint $table) {
+        Schema::create('issue_type', function (Blueprint $table) {
             $table->increments('id');
             $table->softDeletes();
             $table->integer('post_id')->nullable()->unsigned()->index();
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_type');
+        Schema::dropIfExists('issue_type');
     }
 };

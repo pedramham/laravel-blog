@@ -179,7 +179,7 @@
                                 "required": [
                                     "skip",
                                     "take",
-                                    "post_type"
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "skip": {
@@ -192,7 +192,7 @@
                                         "format": "integer",
                                         "example": "10"
                                     },
-                                    "post_type": {
+                                    "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "article"
@@ -289,97 +289,6 @@
                                 },
                                 "type": "object"
                             }
-                        },
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "slug"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Post Name"
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Title"
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post status"
-                                    },
-                                    "slug": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Slug status"
-                                    },
-                                    "subject": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Subject"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Description"
-                                    },
-                                    "meta_description": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Meta Description"
-                                    },
-                                    "meta_keywords": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Meta Keywords"
-                                    },
-                                    "meta_language": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Meta Language"
-                                    },
-                                    "tweet_text": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test Post Tweet Text"
-                                    },
-                                    "category_type": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "article"
-                                    },
-                                    "menu_order": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "1"
-                                    },
-                                    "priority": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "100"
-                                    },
-                                    "menu_status": {
-                                        "type": "boolean",
-                                        "format": "boolean",
-                                        "example": "true"
-                                    },
-                                    "visible_index_status": {
-                                        "type": "boolean",
-                                        "format": "boolean",
-                                        "example": "true"
-                                    },
-                                    "parent_id": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
                         }
                     }
                 },
@@ -412,13 +321,13 @@
                                                 "meta_keywords": "meta_keywords post",
                                                 "meta_language": "meta_language post",
                                                 "tweet_text": "tweet_text post",
-                                                "category_type": "category type",
-                                                "menu_order": "menu_order category",
+                                                "issue_type": "type",
+                                                "menu_order": 1,
                                                 "priority": "133",
                                                 "pic_small": "pic_small post",
                                                 "pic_large": "pic_large post",
-                                                "menu_status": "True",
-                                                "visible_index_status": "True",
+                                                "menu_status": true,
+                                                "visible_index_status": true,
                                                 "parent_id": "1",
                                                 "updated_at": "2023-02-19T07:39:12.000000Z",
                                                 "created_at": "2023-02-19T07:39:12.000000Z",
@@ -499,7 +408,7 @@
                                                 "meta_keywords": "meta_keywords post",
                                                 "meta_language": "meta_language post",
                                                 "tweet_text": "tweet_text post",
-                                                "category_type": "article",
+                                                "issue_type": "article",
                                                 "menu_order": "menu_order category",
                                                 "priority": "133",
                                                 "pic_small": "pic_small post",
@@ -561,7 +470,7 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "category_type"
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "id": {
@@ -614,7 +523,7 @@
                                         "format": "string",
                                         "example": "Test Article Tweet Text"
                                     },
-                                    "category_type": {
+                                    "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "article"
@@ -1299,6 +1208,11 @@
                                         "description": "file to upload",
                                         "type": "file",
                                         "format": "file"
+                                    },
+                                    "video": {
+                                        "description": "video to upload",
+                                        "type": "file",
+                                        "format": "file"
                                     }
                                 },
                                 "type": "object"
@@ -1309,7 +1223,7 @@
                                 "required": [
                                     "title",
                                     "slug",
-                                    "post_type"
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1362,7 +1276,7 @@
                                         "format": "string",
                                         "example": "Test Post Tweet Text"
                                     },
-                                    "post_type": {
+                                    "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "Test Post Post Type"
@@ -1433,22 +1347,20 @@
                                             "example": {
                                                 "name": "post name",
                                                 "title": "title post",
-                                                "status": "True",
+                                                "status": "draft",
                                                 "slug": "slug category",
                                                 "description": "description post",
                                                 "meta_description": "meta_description post",
                                                 "meta_keywords": "meta_keywords post",
                                                 "meta_language": "meta_language post",
                                                 "tweet_text": "tweet_text post",
-                                                "post_type": "post_type post",
+                                                "issue_type": "issue_type post",
                                                 "menu_order": "menu_order post",
-                                                "priority": "133",
-                                                "pic_small": "pic_small post",
-                                                "pic_large": "pic_large post",
-                                                "comment_status": "True",
-                                                "menu_status": "True",
-                                                "visible_index_status": "True",
-                                                "category_id": "1",
+                                                "priority": 133,
+                                                "comment_status": true,
+                                                "menu_status": true,
+                                                "visible_index_status": true,
+                                                "category_id": 1,
                                                 "updated_at": "2023-02-19T07:39:12.000000Z",
                                                 "created_at": "2023-02-19T07:39:12.000000Z",
                                                 "id": "1",
@@ -1491,7 +1403,7 @@
                                 "required": [
                                     "skip",
                                     "take",
-                                    "post_type"
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "skip": {
@@ -1504,7 +1416,7 @@
                                         "format": "integer",
                                         "example": "10"
                                     },
-                                    "post_type": {
+                                    "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "article"
@@ -1631,7 +1543,7 @@
                                                 "meta_keywords": "meta_keywords post",
                                                 "meta_language": "meta_language post",
                                                 "tweet_text": "tweet_text post",
-                                                "post_type": "post_type post",
+                                                "issue_type": "issue_type post",
                                                 "menu_order": "menu_order post",
                                                 "priority": "133",
                                                 "pic_small": "pic_small post",
@@ -1698,7 +1610,7 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "post_type"
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1751,7 +1663,7 @@
                                         "format": "string",
                                         "example": "Test Post Tweet Text"
                                     },
-                                    "post_type": {
+                                    "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "Test Post Post Type"

@@ -17,7 +17,7 @@ class ListRequest extends FormRequest
         return [
             'skip' => 'integer|required|min:0',
             'take' => 'integer|required|min:1',
-            'post_type' => 'string|required',
+            'issue_type' => 'string|required',
         ];
     }
 }

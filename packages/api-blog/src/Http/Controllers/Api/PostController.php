@@ -38,7 +38,7 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"title", "slug", "post_type"},
+     *            required={"title", "slug", "issue_type"},
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
@@ -49,7 +49,7 @@ class PostController extends Controller
      *            @OA\Property(property="meta_keywords", type="string", format="string", example="Test Post Meta Keywords"),
      *            @OA\Property(property="meta_language", type="string", format="string", example="Test Post Meta Language"),
      *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
-     *            @OA\Property(property="post_type", type="string", format="string", example="Test Post Post Type"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="Test Post Post Type"),
      *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
      *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
      *            @OA\Property(property="comment_status", type="boolean", format="boolean", example="true"),
@@ -71,6 +71,7 @@ class PostController extends Controller
      *             @OA\Schema(
      *                 @OA\Property(description="file to upload", property="pic_small", type="file", format="file"),
      *                 @OA\Property(description="file to upload", property="pic_large", type="file", format="file"),
+     *                 @OA\Property(description="video to upload", property="video",    type="file", format="file"),
      *             )
      *         )
      *      ),
@@ -97,7 +98,7 @@ class PostController extends Controller
      *                         example={
      *                         "name": "post name",
      *                         "title": "title post",
-     *                         "status": "True",
+     *                         "status": "draft",
      *                         "slug": "slug category",
      *                         "description": "description post",
      *                         "meta_description": "meta_description post",
@@ -105,15 +106,13 @@ class PostController extends Controller
      *                         "meta_language": "meta_language post",
      *                         "tweet_text": "tweet_text post",
      *                         "tweet_text": "tweet_text post",
-     *                         "post_type": "post_type post",
+     *                         "issue_type": "issue_type post",
      *                         "menu_order": "menu_order post",
-     *                         "priority": "133",
-     *                         "pic_small": "pic_small post",
-     *                         "pic_large": "pic_large post",
-     *                         "comment_status": "True",
-     *                         "menu_status": "True",
-     *                         "visible_index_status": "True",
-     *                         "category_id": "1",
+     *                         "priority": 133,
+     *                         "comment_status": True,
+     *                         "menu_status": True,
+     *                         "visible_index_status": True,
+     *                         "category_id": 1,
      *                         "updated_at": "2023-02-19T07:39:12.000000Z",
      *                         "created_at": "2023-02-19T07:39:12.000000Z",
      *                         "id": "1",
@@ -131,6 +130,7 @@ class PostController extends Controller
     public function store(StoreRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
                 $this->postService->storePost($input),
@@ -155,10 +155,10 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"skip","take", "post_type"},
+     *            required={"skip","take", "issue_type"},
      *            @OA\Property(property="skip", type="integer", format="integer", example="0"),
      *            @OA\Property(property="take", type="integer", format="integer", example="10"),
-     *            @OA\Property(property="post_type", type="string", format="string", example="article"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="article"),
      *         ),
      *      ),
      *      @OA\Response(
@@ -267,7 +267,7 @@ class PostController extends Controller
      *                         "meta_language": "meta_language post",
      *                         "tweet_text": "tweet_text post",
      *                         "tweet_text": "tweet_text post",
-     *                         "post_type": "post_type post",
+     *                         "issue_type": "issue_type post",
      *                         "menu_order": "menu_order post",
      *                         "priority": "133",
      *                         "pic_small": "pic_small post",
@@ -313,7 +313,7 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id", "post_type"},
+     *            required={"id", "issue_type"},
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
@@ -324,7 +324,7 @@ class PostController extends Controller
      *            @OA\Property(property="meta_keywords", type="string", format="string", example="Test Post Meta Keywords"),
      *            @OA\Property(property="meta_language", type="string", format="string", example="Test Post Meta Language"),
      *            @OA\Property(property="tweet_text", type="string", format="string", example="Test Post Tweet Text"),
-     *            @OA\Property(property="post_type", type="string", format="string", example="Test Post Post Type"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="Test Post Post Type"),
      *            @OA\Property(property="menu_order", type="integer", format="integer", example="1"),
      *            @OA\Property(property="priority", type="integer", format="integer", example="100"),
      *            @OA\Property(property="comment_status", type="boolean", format="boolean", example="true"),

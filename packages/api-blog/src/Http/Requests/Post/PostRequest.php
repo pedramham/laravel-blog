@@ -16,7 +16,7 @@ class PostRequest extends FormRequest
     {
         return [
             'id' => 'integer|required|exists:posts,id',
-            'post_type' => 'string|required',
+            'issue_type' => 'string|required',
         ];
     }
 }
