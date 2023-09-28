@@ -172,30 +172,31 @@
                 "description": "list Category",
                 "operationId": "list",
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "skip",
-                                    "take",
-                                    "issue_type"
+                                    "local"
                                 ],
                                 "properties": {
-                                    "skip": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "0"
-                                    },
-                                    "take": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "10"
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "publish"
                                     },
                                     "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "article"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "local": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "en"
                                     }
                                 },
                                 "type": "object"
@@ -276,15 +277,28 @@
                         "multipart/form-data": {
                             "schema": {
                                 "properties": {
-                                    "pic_small": {
-                                        "description": "file to upload",
-                                        "type": "file",
-                                        "format": "file"
+                                    "name": {
+                                        "description": "Category name",
+                                        "type": "string"
                                     },
-                                    "pic_large": {
-                                        "description": "file to upload",
-                                        "type": "file",
-                                        "format": "file"
+                                    "issue_type": {
+                                        "description": "Category type",
+                                        "type": "string",
+                                        "example": "news"
+                                    },
+                                    "folder_name": {
+                                        "description": "Folder Name",
+                                        "type": "string",
+                                        "example": "news"
+                                    },
+                                    "slug": {
+                                        "description": "Category slug",
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "description": "Category status",
+                                        "type": "string",
+                                        "example": "draft"
                                     }
                                 },
                                 "type": "object"
@@ -470,13 +484,19 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "issue_type"
+                                    "issue_type",
+                                    "folder_name"
                                 ],
                                 "properties": {
                                     "id": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "news"
                                     },
                                     "name": {
                                         "type": "string",
@@ -686,13 +706,25 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "issue_type",
+                                    "folder_name"
                                 ],
                                 "properties": {
                                     "id": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "2"
+                                    },
+                                    "issue_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "name category"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "folderName"
                                     }
                                 },
                                 "type": "object"
@@ -1208,11 +1240,6 @@
                                         "description": "file to upload",
                                         "type": "file",
                                         "format": "file"
-                                    },
-                                    "video": {
-                                        "description": "video to upload",
-                                        "type": "file",
-                                        "format": "file"
                                     }
                                 },
                                 "type": "object"
@@ -1223,13 +1250,19 @@
                                 "required": [
                                     "title",
                                     "slug",
-                                    "issue_type"
+                                    "issue_type",
+                                    "folder_name"
                                 ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "Test post name"
+                                    },
+                                    "folder_name": {
+                                        "description": "Folder Name",
+                                        "type": "string",
+                                        "example": "post"
                                     },
                                     "title": {
                                         "type": "string",
@@ -1396,30 +1429,22 @@
                 "description": "list Post",
                 "operationId": "list-post",
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "skip",
-                                    "take",
-                                    "issue_type"
+                                    "local"
                                 ],
                                 "properties": {
-                                    "skip": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "0"
-                                    },
-                                    "take": {
-                                        "type": "integer",
-                                        "format": "integer",
-                                        "example": "10"
-                                    },
                                     "issue_type": {
                                         "type": "string",
                                         "format": "string",
                                         "example": "article"
+                                    },
+                                    "local": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "en"
                                     }
                                 },
                                 "type": "object"
@@ -1610,9 +1635,15 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "issue_type"
+                                    "issue_type",
+                                    "folder_name"
                                 ],
                                 "properties": {
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "news"
+                                    },
                                     "name": {
                                         "type": "string",
                                         "format": "string",
@@ -1826,13 +1857,19 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "issue_type"
                                 ],
                                 "properties": {
                                     "id": {
                                         "type": "integer",
                                         "format": "integer",
                                         "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "folderName"
                                     }
                                 },
                                 "type": "object"
@@ -1852,12 +1889,12 @@
                                             "example": "1"
                                         },
                                         "message": {
-                                            "description": "The response message",
+                                            "description": "Post delete successfully",
                                             "type": "string"
                                         },
                                         "data": {
                                             "type": "string",
-                                            "example": "true"
+                                            "example": "Post delete successfully"
                                         }
                                     },
                                     "type": "object"
@@ -1944,109 +1981,19 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "app_logo",
-                                    "app_name"
+                                    "app_name",
+                                    "local"
                                 ],
                                 "properties": {
                                     "app_name": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test app_name"
+                                        "example": "name your app"
                                     },
-                                    "app_logo": {
+                                    "local": {
                                         "type": "string",
                                         "format": "string",
-                                        "example": "Test app_logo"
-                                    },
-                                    "app_favicon": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test app_favicon"
-                                    },
-                                    "app_description": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test app_description"
-                                    },
-                                    "app_short_description": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test app_short_description"
-                                    },
-                                    "app_keywords": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test app_keywords"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test address"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test phone"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test email"
-                                    },
-                                    "mobile": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test mobile"
-                                    },
-                                    "fax": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test fax"
-                                    },
-                                    "telegram": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test telegram"
-                                    },
-                                    "whatsapp": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test whatsapp"
-                                    },
-                                    "facebook": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test facebook"
-                                    },
-                                    "twitter": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test twitter"
-                                    },
-                                    "instagram": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test instagram"
-                                    },
-                                    "linkedin": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test linkedin"
-                                    },
-                                    "youtube": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test youtube"
-                                    },
-                                    "pinterest": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test pinterest"
-                                    },
-                                    "github": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "Test github"
+                                        "example": "en"
                                     }
                                 },
                                 "type": "object"
@@ -2111,6 +2058,2088 @@
                         "apiAuth": []
                     }
                 ]
+            }
+        },
+        "/blog-api/setting/v1/show": {
+            "post": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "show a setting in DB",
+                "description": "get setting in DB",
+                "operationId": "showSetting",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "app_name": "App Name",
+                                                "app_logo": "Logo",
+                                                "app_favicon": "Favicon",
+                                                "app_description": "Description",
+                                                "app_short_description": "Short Description",
+                                                "app_keywords": "Keywords",
+                                                "address": "address",
+                                                "phone": "Phone",
+                                                "email": "Email",
+                                                "mobile": "Mobile",
+                                                "fax": "Fax",
+                                                "telegram": "Telegram",
+                                                "whatsapp": "Whatsapp",
+                                                "facebook": "Facebook",
+                                                "twitter": "Twitter",
+                                                "instagram": "Instagram",
+                                                "linkedin": "Linkedin",
+                                                "Youtube": "youtube",
+                                                "Pinterest": "pinterest",
+                                                "Github": "github",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/list": {
+            "post": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "list Video Category",
+                "description": "list Video Category",
+                "operationId": "list-video-category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "local"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "publish"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "local": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "en"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "subject": "subject Post",
+                                                    "pic_small": "pic_small Post",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                },
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "subject": "subject Post",
+                                                    "pic_small": "pic_small Post",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "2"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/store": {
+            "post": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "Store viedo category in DB",
+                "description": "Store video category in DB",
+                "operationId": "store-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Category name",
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "description": "Category slug",
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "description": "Category status",
+                                        "type": "string",
+                                        "example": "draft"
+                                    },
+                                    "folder_name": {
+                                        "description": "Folder Name",
+                                        "type": "string",
+                                        "example": "news"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Video Category"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "category video name",
+                                                "title": "category video title",
+                                                "status": "True",
+                                                "slug": "slug category",
+                                                "description": "description video category",
+                                                "meta_description": "meta_description video category",
+                                                "meta_keywords": "meta_keywords video category",
+                                                "meta_language": "meta_language video category",
+                                                "tweet_text": "tweet_text video category",
+                                                "menu_order": 1,
+                                                "priority": "133",
+                                                "pic_small": "pic_small video category",
+                                                "pic_large": "pic_large video category",
+                                                "menu_status": true,
+                                                "visible_index_status": true,
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/show": {
+            "post": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "Store video category in DB",
+                "description": "Store video category in DB",
+                "operationId": "show-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "video category name",
+                                                "title": "video category post",
+                                                "status": "True",
+                                                "slug": "slug video category",
+                                                "description": "description video category",
+                                                "meta_description": "meta_description video category post",
+                                                "meta_keywords": "meta_keywords video category post",
+                                                "meta_language": "meta_language video categoy post",
+                                                "tweet_text": "tweet_text video category",
+                                                "issue_type": "article",
+                                                "menu_order": "menu_order video category",
+                                                "priority": "133",
+                                                "pic_small": "pic_small video category",
+                                                "pic_large": "pic_large video category",
+                                                "menu_status": "True",
+                                                "visible_index_status": "True",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/edit": {
+            "put": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "Edit video category in DB",
+                "description": "Edit video category in DB",
+                "operationId": "edit-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "folder_name"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "video"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Category Name"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-video-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Description"
+                                    },
+                                    "meta_description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Description"
+                                    },
+                                    "meta_keywords": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Keywords"
+                                    },
+                                    "meta_language": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Language"
+                                    },
+                                    "tweet_text": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Tweet Text"
+                                    },
+                                    "menu_order": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "menu_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "visible_index_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "video category",
+                                                "title": "title video category",
+                                                "slug": "slug video category",
+                                                "description": "description v category",
+                                                "pic_small": "pic_small video category",
+                                                "pic_large": "pic_large video category",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "Soft-delete video category in DB",
+                "description": "Soft-delete video category in DB",
+                "operationId": "soft-delete-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-category/v1/delete": {
+            "delete": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "delete video category in DB",
+                "description": "delete video category in DB",
+                "operationId": "delete-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "folderName"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/video-category/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "VideoCategory"
+                ],
+                "summary": "restore delete video category in DB",
+                "description": "when you delete video category in DB you can restore it",
+                "operationId": "restore-delete-video-category",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error video category delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/video/v1/store": {
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Store video in DB",
+                "description": "Store video in DB",
+                "operationId": "storeVideo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "thumbnail": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "video_file": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "issue_type",
+                                    "folder_name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test post name"
+                                    },
+                                    "folder_name": {
+                                        "description": "Folder Name",
+                                        "type": "string",
+                                        "example": "post"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Title"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post status"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Slug status"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Description"
+                                    },
+                                    "meta_description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Meta Description"
+                                    },
+                                    "meta_keywords": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Meta Keywords"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "3:40"
+                                    },
+                                    "video_url": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "https://www.example.com/1.jpg"
+                                    },
+                                    "video_file_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "mp4"
+                                    },
+                                    "video_number": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Video33#r"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "100"
+                                    },
+                                    "video_course_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {},
+                                        "example": {
+                                            "id": "1",
+                                            "name": "tag post"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Post"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "post name",
+                                                "title": "title post",
+                                                "status": "draft",
+                                                "slug": "slug category",
+                                                "description": "description post",
+                                                "meta_description": "meta_description post",
+                                                "meta_keywords": "meta_keywords post",
+                                                "priority": 133,
+                                                "video_url": "https://www.example.comc/video_url.jpg",
+                                                "video_file": "video_file.mp4",
+                                                "video_file_type": "mp4",
+                                                "video_number": "video3334",
+                                                "video_course_id": 1,
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1",
+                                                "tags": {
+                                                    "id": "1",
+                                                    "name": "tag Video"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Create a Video post"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video/v1/list": {
+            "post": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "list Video",
+                "description": "list Video",
+                "operationId": "list-video",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "local"
+                                ],
+                                "properties": {
+                                    "local": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "en"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "Video",
+                                                    "title": "title Video",
+                                                    "slug": "slug Video",
+                                                    "description": "description Post",
+                                                    "thumbnail": "thumbnail video",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                },
+                                                {
+                                                    "name": "Video",
+                                                    "title": "title Video",
+                                                    "slug": "slug Videi",
+                                                    "description": "description Post",
+                                                    "thumbnail": "thumbnail video",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "2"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video/v1/show": {
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Store video in DB",
+                "description": "Store video in DB",
+                "operationId": "show-video",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "vidoe name",
+                                                "title": "video post",
+                                                "status": "Publish",
+                                                "slug": "slug-video",
+                                                "description": "description video",
+                                                "meta_description": "meta_description video",
+                                                "meta_keywords": "meta_keywords video",
+                                                "priority": "133",
+                                                "thumbnail": "thumbnail.jpg",
+                                                "video_url": "https:wwww.example.com/video.mp4",
+                                                "video_file_type": "mp4",
+                                                "video_number": "video#ygvv",
+                                                "video_course_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1",
+                                                "tags": {
+                                                    "id": "1",
+                                                    "name": "tag post"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video/v1/edit": {
+            "put": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Edit video in DB",
+                "description": "Edit video in DB",
+                "operationId": "edit-video",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "thumbnail": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "video_file": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "issue_type",
+                                    "folder_name"
+                                ],
+                                "properties": {
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "news"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test post name"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Title"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post status"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Slug status"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Description"
+                                    },
+                                    "meta_description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test Post Meta Description"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "3:40"
+                                    },
+                                    "video_url": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "www.fff.mp4"
+                                    },
+                                    "video_file_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "mp4"
+                                    },
+                                    "video_number": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "#video33"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "100"
+                                    },
+                                    "video_course_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {},
+                                        "example": {
+                                            "id": "1",
+                                            "name": "tag video"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "edit success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/vidoe/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Soft-delete video in DB",
+                "description": "Soft-delete video in DB",
+                "operationId": "soft-delete-video",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video/v1/delete": {
+            "delete": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "delete video in DB",
+                "description": "delete video in DB",
+                "operationId": "delete-video",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "folderName"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "Video delete successfully",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "Video delete successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/video/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "restore delete video in DB",
+                "description": "when you delete video in DB you can restore it",
+                "operationId": "restore-delete-video",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Restore delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/video-course/v1/list": {
+            "post": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "list Video Course",
+                "description": "list Video Course",
+                "operationId": "list-video-course",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "local"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "publish"
+                                    },
+                                    "local": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "en"
+                                    },
+                                    "list_trash": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "list_trash"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": [
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "subject": "subject Post",
+                                                    "price": "100",
+                                                    "sell_count": "1000",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "1"
+                                                },
+                                                {
+                                                    "name": "Post",
+                                                    "title": "title Post",
+                                                    "slug": "slug Post",
+                                                    "subject": "subject Post",
+                                                    "price": "100",
+                                                    "sell_count": "1000",
+                                                    "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                    "created_at": "2023-02-19T07:39:12.000000Z",
+                                                    "id": "2"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-course/v1/store": {
+            "post": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "Store viedo course in DB",
+                "description": "Store video course in DB",
+                "operationId": "store-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Course name",
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "description": "Course title",
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "description": "Course slug",
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "description": "Course status",
+                                        "type": "string",
+                                        "example": "draft"
+                                    },
+                                    "folder_name": {
+                                        "description": "Folder Name",
+                                        "type": "string",
+                                        "example": "videoCourse"
+                                    },
+                                    "category_video_id": {
+                                        "description": "Categry video Id",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolaen",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "Create new Video Category"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "course video name",
+                                                "title": "course video title",
+                                                "status": "True",
+                                                "slug": "slug category",
+                                                "description": "description video course",
+                                                "meta_description": "meta_description video course",
+                                                "meta_keywords": "meta_keywords video course",
+                                                "price": "80000",
+                                                "discount": "2500",
+                                                "is_free": "true",
+                                                "sell_count": "50000",
+                                                "priority": "1",
+                                                "pic_small": "pic_small video course",
+                                                "pic_large": "pic_large video course",
+                                                "menu_status": true,
+                                                "visible_index_status": true,
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-course/v1/show": {
+            "post": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "Store video course in DB",
+                "description": "Store video course in DB",
+                "operationId": "show-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "video course name",
+                                                "title": "video course post",
+                                                "status": "True",
+                                                "slug": "slug video course",
+                                                "description": "description video course",
+                                                "meta_description": "meta_description video course",
+                                                "meta_keywords": "meta_keywords video course",
+                                                "meta_language": "meta_language video course",
+                                                "price": "80000",
+                                                "discount": "2500",
+                                                "is_free": "true",
+                                                "sell_count": "50000",
+                                                "menu_order": "menu_order video course",
+                                                "priority": "133",
+                                                "pic_small": "pic_small video course",
+                                                "pic_large": "pic_large video course",
+                                                "menu_status": "True",
+                                                "visible_index_status": "True",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-course/v1/edit": {
+            "put": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "Edit video course in DB",
+                "description": "Edit video course in DB",
+                "operationId": "edit-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "pic_small": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    },
+                                    "pic_large": {
+                                        "description": "file to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "folder_name"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "video"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Category Name"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Title"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "test-video-title"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Subject"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Description"
+                                    },
+                                    "meta_description": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Description"
+                                    },
+                                    "meta_keywords": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Keywords"
+                                    },
+                                    "meta_language": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Test video Meta Language"
+                                    },
+                                    "menu_order": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "priority": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "200"
+                                    },
+                                    "discount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "2"
+                                    },
+                                    "sell_count": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "500"
+                                    },
+                                    "is_free": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "false"
+                                    },
+                                    "menu_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    },
+                                    "visible_index_status": {
+                                        "type": "boolean",
+                                        "format": "boolean",
+                                        "example": "true"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {},
+                                            "example": {
+                                                "name": "video category",
+                                                "title": "title video category",
+                                                "slug": "slug video category",
+                                                "description": "description v category",
+                                                "pic_small": "pic_small video category",
+                                                "pic_large": "pic_large video category",
+                                                "parent_id": "1",
+                                                "updated_at": "2023-02-19T07:39:12.000000Z",
+                                                "created_at": "2023-02-19T07:39:12.000000Z",
+                                                "id": "1"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error  edit"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-course/v1/soft-delete": {
+            "delete": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "Soft-delete video course in DB",
+                "description": "Soft-delete video course in DB",
+                "operationId": "soft-delete-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error soft delete"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/blog-api/video-course/v1/delete": {
+            "delete": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "delete video course in DB",
+                "description": "delete video course in DB",
+                "operationId": "delete-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    },
+                                    "folder_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "folderName"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error Delete"
+                    }
+                }
+            }
+        },
+        "/blog-api/video-course/v1/restore-delete": {
+            "put": {
+                "tags": [
+                    "VideoCourse"
+                ],
+                "summary": "restore delete video course in DB",
+                "description": "when you delete video course in DB you can restore it",
+                "operationId": "restore-delete-video-course",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An example resource if success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error video category delete"
+                    }
+                }
             }
         }
     },

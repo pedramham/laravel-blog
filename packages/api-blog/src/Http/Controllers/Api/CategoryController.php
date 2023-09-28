@@ -3,9 +3,11 @@
 namespace Admin\ApiBolg\Http\Controllers\Api;
 
 use Admin\ApiBolg\Http\ApiBlogResponse;
+use Admin\ApiBolg\Http\Requests\Category\DeleteRequest;
 use Admin\ApiBolg\Http\Requests\Category\EditRequest;
 use Admin\ApiBolg\Http\Requests\Category\CategoryRequest;
 use Admin\ApiBolg\Http\Requests\Category\ListRequest;
+use Admin\ApiBolg\Http\Requests\Category\SoftDeleteRequest;
 use Admin\ApiBolg\Http\Requests\Category\StoreRequest;
 use Admin\ApiBolg\Models\Category;
 use Admin\ApiBolg\Services\CategoryService;
@@ -13,10 +15,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Log;
 
 class CategoryController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     private CategoryService $categoryService;
 
     public function __construct(CategoryService $categoryService)
@@ -33,12 +37,12 @@ class CategoryController extends Controller
      *      description="list Category",
      *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
-     *         required=true,
      *         @OA\JsonContent(
-     *            required={"skip","take", "issue_type"},
-     *            @OA\Property(property="skip", type="integer", format="integer", example="0"),
-     *            @OA\Property(property="take", type="integer", format="integer", example="10"),
+     *            required={"local"},
+     *            @OA\Property(property="status", type="string", format="string", example="publish"),
      *            @OA\Property(property="issue_type", type="string", format="string", example="article"),
+     *            @OA\Property(property="parent_id", type="int", example="1"),
+     *            @OA\Property(property="local", type="string", format="string", example="en"),
      *         ),
      *      ),
      *      @OA\Response(
@@ -84,7 +88,6 @@ class CategoryController extends Controller
      *                          },
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -116,8 +119,11 @@ class CategoryController extends Controller
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 @OA\Property(description="file to upload", property="pic_small", type="file", format="file"),
-     *                 @OA\Property(description="file to upload", property="pic_large", type="file", format="file"),
+     *                 @OA\Property(description="Category name", property="name", type="string"),
+     *                 @OA\Property(description="Category type", property="issue_type", type="string", example="news"),
+     *                 @OA\Property(description="Folder Name", property="folder_name", type="string", example="news"),
+     *                 @OA\Property(description="Category slug", property="slug", type="string"),
+     *                 @OA\Property(description="Category status", property="status", type="string", example="draft"),
      *             )
      *         )
      *      ),
@@ -165,7 +171,6 @@ class CategoryController extends Controller
      *                         "id": "1",
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -174,6 +179,7 @@ class CategoryController extends Controller
     public function store(StoreRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
                 $this->categoryService->storeCategory($input),
@@ -246,7 +252,6 @@ class CategoryController extends Controller
      *                         "id": "1",
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
@@ -254,10 +259,9 @@ class CategoryController extends Controller
      */
     public function show(CategoryRequest $request)
     {
-        $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->show($input,Category::class)
+                $this->categoryService->show($request->validated(), Category::class)
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -275,8 +279,9 @@ class CategoryController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id","issue_type"},
+     *            required={"id","issue_type","folder_name"},
      *            @OA\Property(property="id", type="integer", format="integer", example="2"),
+     *            @OA\Property(property="folder_name", type="string", format="string", example="news"),
      *            @OA\Property(property="name", type="string", format="string", example="Test Category Name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Article Title"),
      *            @OA\Property(property="slug", type="string", format="string", example="test-article-title"),
@@ -334,19 +339,21 @@ class CategoryController extends Controller
      *                         "id": "1",
      *                         },
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error  edit"),
      *  )
      */
-    public function edit(EditRequest $request) : ApiBlogResponse
+    public function edit(EditRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
 
         try {
             return new ApiBlogResponse(
-                $this->categoryService->updateCategory($input)
+                $this->categoryService->updateCategory($input),
+                'Category update successfully',
+                true,
+                200
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -389,18 +396,20 @@ class CategoryController extends Controller
      *                         type="string",
      *                         example="true"
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error soft delete"),
      *  )
      */
-    public function softDelete(CategoryRequest $request): ApiBlogResponse
+    public function softDelete(SoftDeleteRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->softDelete($input,Category::class)
+                $this->categoryService->softDelete($input, Category::class),
+                'Category Soft delete successfully',
+                true,
+                200
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -417,8 +426,10 @@ class CategoryController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id"},
-     *            @OA\Property(property="id", type="integer", format="integer", example="2")
+     *            required={"id","issue_type","folder_name"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="2"),
+     *            @OA\Property(property="issue_type", type="string", format="string", example="name category"),
+     *            @OA\Property(property="folder_name", type="string", format="string", example="folderName")
      *         ),
      *      ),
      *      @OA\Response(
@@ -441,18 +452,20 @@ class CategoryController extends Controller
      *                         type="string",
      *                         example="true"
      *                     ),
-
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error Delete"),
      *  )
      */
-    public function delete(CategoryRequest $request): ApiBlogResponse
+    public function delete(DeleteRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
                 $this->categoryService->deleteCategory($input),
+                'Category delete successfully',
+                true,
                 200
             );
         } catch (\Exception $exception) {
@@ -499,12 +512,14 @@ class CategoryController extends Controller
      *     @OA\Response(response="401", description="Error category delete"),
      *  )
      */
-    public function restoreDelete(CategoryRequest $request): ApiBlogResponse
+    public function restoreDelete(SoftDeleteRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
-                $this->categoryService->restoreDelete($input,Category::class),
+                $this->categoryService->restoreDelete($input, Category::class),
+                'Category restore successfully',
+                true,
                 200
             );
         } catch (\Exception $exception) {

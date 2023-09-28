@@ -15,9 +15,10 @@ class ListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'skip' => 'integer|required|min:0',
-            'take' => 'integer|required|min:1',
-            'issue_type' => 'string|required',
+            'issue_type' => 'string|nullable',
+            'tags' => 'nullable',
+            'local' => 'string|required',
+            'list_trash' => 'string|nullable',
         ];
     }
 }

@@ -35,6 +35,7 @@ class StoreRequest extends FormRequest
             'linkedin' => 'nullable|string',
             'pinterest' => 'nullable|string',
             'github' => 'nullable|string',
+            'local' => 'string|required',
         ];
     }
 }

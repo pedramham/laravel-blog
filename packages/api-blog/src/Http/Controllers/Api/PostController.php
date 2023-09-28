@@ -4,9 +4,12 @@ namespace Admin\ApiBolg\Http\Controllers\Api;
 
 use Admin\ApiBolg\Helper\FileHelper;
 use Admin\ApiBolg\Http\ApiBlogResponse;
+use Admin\ApiBolg\Http\Requests\Post\DeletePost;
+use Admin\ApiBolg\Http\Requests\Post\DeletePostRequest;
 use Admin\ApiBolg\Http\Requests\Post\EditRequest;
 use Admin\ApiBolg\Http\Requests\Post\ListRequest;
 use Admin\ApiBolg\Http\Requests\Post\PostRequest;
+use Admin\ApiBolg\Http\Requests\Post\SoftDeletePost;
 use Admin\ApiBolg\Http\Requests\Post\StoreRequest;
 use Admin\ApiBolg\Models\Post;
 use Admin\ApiBolg\Services\PostService;
@@ -14,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Log;
 
 class PostController extends Controller
 {
@@ -38,8 +42,9 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"title", "slug", "issue_type"},
+     *            required={"title", "slug", "issue_type","folder_name"},
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
+     *            @OA\Property(description="Folder Name", property="folder_name", type="string", example="post"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
      *            @OA\Property(property="slug", type="string", format="string", example="Test Slug status"),
@@ -71,7 +76,6 @@ class PostController extends Controller
      *             @OA\Schema(
      *                 @OA\Property(description="file to upload", property="pic_small", type="file", format="file"),
      *                 @OA\Property(description="file to upload", property="pic_large", type="file", format="file"),
-     *                 @OA\Property(description="video to upload", property="video",    type="file", format="file"),
      *             )
      *         )
      *      ),
@@ -130,7 +134,6 @@ class PostController extends Controller
     public function store(StoreRequest $request): ApiBlogResponse
     {
         $input = $request->validated();
-
         try {
             return new ApiBlogResponse(
                 $this->postService->storePost($input),
@@ -153,12 +156,10 @@ class PostController extends Controller
      *      description="list Post",
      *      security={{ "apiAuth": {} }},
      *      @OA\RequestBody(
-     *         required=true,
      *         @OA\JsonContent(
-     *            required={"skip","take", "issue_type"},
-     *            @OA\Property(property="skip", type="integer", format="integer", example="0"),
-     *            @OA\Property(property="take", type="integer", format="integer", example="10"),
+     *            required={"local"},
      *            @OA\Property(property="issue_type", type="string", format="string", example="article"),
+     *            @OA\Property(property="local", type="string", format="string", example="en"),
      *         ),
      *      ),
      *      @OA\Response(
@@ -313,7 +314,8 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id", "issue_type"},
+     *            required={"id", "issue_type","folder_name"},
+     *            @OA\Property(property="folder_name", type="string", format="string", example="news"),
      *            @OA\Property(property="name", type="string", format="string", example="Test post name"),
      *            @OA\Property(property="title", type="string", format="string", example="Test Post Title"),
      *            @OA\Property(property="status", type="string", format="string", example="Test Post status"),
@@ -376,8 +378,10 @@ class PostController extends Controller
      */
     public function edit(EditRequest $request): ApiBlogResponse
     {
+
         $input = $request->validated();
         try {
+
             return new ApiBlogResponse(
                 $this->postService->updatePost($input),
                 'Post edit successfully',
@@ -431,13 +435,18 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error  soft delete"),
      *  )
      */
-    public function softDelete(PostRequest $request): ApiBlogResponse
+    public function softDelete(SoftDeletePost $request): ApiBlogResponse
     {
+
         $input = $request->validated();
+
         try {
             return new ApiBlogResponse(
                 $this->postService->softDelete($input, Post::class),
-                200
+                'Post soft delete successfully',
+                true,
+                200,
+
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -454,8 +463,9 @@ class PostController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"id"},
-     *            @OA\Property(property="id", type="integer", format="integer", example="2")
+     *            required={"id","issue_type"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="2"),
+     *            @OA\Property(property="folder_name", type="string", format="string", example="folderName")
      *         ),
      *      ),
      *      @OA\Response(
@@ -471,24 +481,27 @@ class PostController extends Controller
      *                     @OA\Property(
      *                         property="message",
      *                         type="string",
-     *                         description="The response message"
+     *                         description="Post delete successfully"
      *                     ),
      *                    @OA\Property(
      *                         property="data",
      *                         type="string",
-     *                         example="true"
+     *                         example="Post delete successfully"
      *                     ),
      *          )
      *     ),
      *     @OA\Response(response="401", description="Error Delete"),
      *  )
      */
-    public function delete(PostRequest $request): ApiBlogResponse
+    public function delete(DeletePost $request): ApiBlogResponse
     {
+
         try {
             return new ApiBlogResponse(
                 $this->postService->deletePost($request),
-                200
+                'Post delete successfully',
+                true,
+                200,
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
@@ -534,13 +547,15 @@ class PostController extends Controller
      *     @OA\Response(response="401", description="Error Restore delete"),
      *  )
      */
-    public function restoreDelete(PostRequest $request): ApiBlogResponse
+    public function restoreDelete(SoftDeletePost $request): ApiBlogResponse
     {
         $input = $request->validated();
         try {
             return new ApiBlogResponse(
                 $this->postService->restoreDelete($input, Post::class),
-                200
+                'Post restore successfully',
+                true,
+                200,
             );
         } catch (\Exception $exception) {
             return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());

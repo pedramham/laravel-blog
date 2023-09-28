@@ -16,7 +16,10 @@ class CategoryRequest extends FormRequest
     {
         return [
             'id' => 'integer|required|exists:categories,id',
-            'issue_type' => 'string|required',
+            'issue_type' => 'string|nullable',
+            'folder_name' => 'string|nullable',
+            'status' => 'string|nullable',
+            'parent_id' => 'string|nullable',
         ];
     }
 }

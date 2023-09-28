@@ -2,23 +2,41 @@
 
 namespace Admin\ApiBolg\Models;
 
+use Admin\ApiBolg\Traits\TranslatableModel;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\Translatable\HasTranslations;
+use Database\Factories\PostFactory;
 
+use DateTimeInterface;
 class Post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTranslations;
 
-    const POST_STATUS = [
-        'draft' => 'draft',
-        'publish' => 'publish',
-        'pending' => 'pending',
-        'future' => 'future',
-        'private' => 'private',
+    use TranslatableModel, HasTranslations {
+        TranslatableModel::setTranslation insteadof HasTranslations;
+    }
+
+    public $translatable = [
+        'name',
+        'title',
+        'slug',
+        'status',
+        'subject',
+        'description',
+        'meta_description',
+        'meta_keywords',
+        'meta_language',
+        'tweet_text',
+        'issue_type',
+        'pic_small',
+        'pic_large',
     ];
 
     const issue_type = [
@@ -54,23 +72,32 @@ class Post extends Model
         return $this->belongsToMany(Tag::class)->as('tags');
     }
 
-    //relation with video table
-    public function videos(): BelongsToMany
-    {
-        return $this->belongsToMany(Video::class,'issue_type','post_id','video_id')->as('videos');
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public static function listPagination(array $input): Collection
+    public static function listPagination(array $input): LengthAwarePaginator
     {
-        return self::select('id', 'name', 'title', 'slug', 'subject', 'pic_small', 'created_at', 'updated_at')
-            ->where('status', self::POST_STATUS['publish'])
-            ->where('issue_type', $input['issue_type'])
-            ->skip($input['skip'])->take($input['take'])->get();
+        $local = $input['local'] ?? null;
+        $tags = $input['tags'] ?? null;
+        $issue_type = $input['issue_type'] ?? null;
+        $list_trash = $input['list_trash'] ?? null;
+
+        if ($tags) {
+            return Tag::paginate(config('view.pagination'));
+        }
+        $query = self::select('id', 'name', 'title', 'slug', 'subject', 'issue_type', 'pic_small', 'menu_order', 'menu_status', 'created_at','priority', 'updated_at','category_id');
+        $query->when($issue_type, function ($query, $issue_type) use ($local) {
+            return $query->where("issue_type->$local", $issue_type);
+        });
+        $query->when($list_trash, function ($query) {
+                return $query->onlyTrashed();
+            });
+        $query->orderBy('id', 'DESC')->with('category:id,name');
+        // Return the paginated results using the config() helper function
+        return $query->paginate(config('view.pagination'));
+
     }
 
     /**
@@ -98,5 +125,16 @@ class Post extends Model
         static::restoring(function ($posts) {
             Comment::withTrashed()->where('post_id', $posts->id)->restore();
         });
+    }
+
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y/m/d H:i:s');
+    }
+    // Override the newFactory method
+    protected static function newFactory()
+    {
+        // Return an instance of your factory class with the correct namespace
+        return PostFactory::new();
     }
 }
