@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\FileBag;
 
 /**
  * @method static array storeFile(array $input)
- * @method static void deleteFile(array $input, string $issueType)
+ * @method static void deleteFile(array $filenames, string $folderName)
  */
 class Files extends Facade
 {

@@ -3,6 +3,8 @@
 namespace Admin\ApiBolg\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Validator;
 
 class ListRequest extends FormRequest
 {
@@ -15,9 +17,23 @@ class ListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'skip' => 'integer|required|min:0',
-            'take' => 'integer|required|min:1',
-            'issue_type' => 'string|required',
+            'issue_type' => 'string|nullable',
+            'status' => 'string|nullable',
+            'parent_id' => 'string|nullable',
+            'local' => 'string|required',
+            'list_trash' => 'string|nullable',
         ];
+    }
+
+    public function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        $response = response()->json([
+            'message' => 'Invalid data send',
+            'details' => $errors->messages(),
+        ], 422);
+
+        throw new HttpResponseException($response);
     }
 }

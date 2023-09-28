@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->string('slug')->unique();
-            $table->string('status')->default('draft');
+            $table->string('status')->default('draft')->nullable();
             $table->text('subject')->nullable();
             $table->text('description')->nullable();
             $table->text('meta_description')->nullable();
@@ -28,9 +28,9 @@ return new class extends Migration
             $table->text('tweet_text')->nullable();
             $table->string('issue_type');
             $table->integer('menu_order')->nullable();
-            $table->integer('priority')->default(0);
-            $table->boolean('menu_status')->default(0);
-            $table->boolean('visible_index_status')->default(0);
+            $table->integer('priority')->default('0')->nullable();
+            $table->boolean('menu_status')->default('0')->nullable();
+            $table->boolean('visible_index_status')->default('0')->nullable();
             $table->string('pic_small')->nullable();
             $table->string('pic_large')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();

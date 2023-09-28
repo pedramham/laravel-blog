@@ -3,7 +3,11 @@
 namespace Admin\ApiBolg\Http\Controllers\Api;
 
 use Admin\ApiBolg\Http\ApiBlogResponse;
+use Admin\ApiBolg\Http\Requests\Category\CategoryRequest;
+use Admin\ApiBolg\Http\Requests\Setting\ShowRequest;
 use Admin\ApiBolg\Http\Requests\Setting\StoreRequest;
+use Admin\ApiBolg\Models\Category;
+use Admin\ApiBolg\Models\Setting;
 use Admin\ApiBolg\Services\SettingService;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -32,27 +36,9 @@ class SettingController extends Controller
      *      @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *            required={"app_logo", "app_name"},
-     *            @OA\Property(property="app_name", type="string", format="string", example="Test app_name"),
-     *            @OA\Property(property="app_logo", type="string", format="string", example="Test app_logo"),
-     *            @OA\Property(property="app_favicon", type="string", format="string", example="Test app_favicon"),
-     *            @OA\Property(property="app_description", type="string", format="string", example="Test app_description"),
-     *            @OA\Property(property="app_short_description", type="string", format="string", example="Test app_short_description"),
-     *            @OA\Property(property="app_keywords", type="string", format="string", example="Test app_keywords"),
-     *            @OA\Property(property="address", type="string", format="string", example="Test address"),
-     *            @OA\Property(property="phone", type="string", format="string", example="Test phone"),
-     *            @OA\Property(property="email", type="string", format="string", example="Test email"),
-     *            @OA\Property(property="mobile", type="string", format="string", example="Test mobile"),
-     *            @OA\Property(property="fax", type="string", format="string", example="Test fax"),
-     *            @OA\Property(property="telegram", type="string", format="string", example="Test telegram"),
-     *            @OA\Property(property="whatsapp", type="string", format="string", example="Test whatsapp"),
-     *            @OA\Property(property="facebook", type="string", format="string", example="Test facebook"),
-     *            @OA\Property(property="twitter", type="string", format="string", example="Test twitter"),
-     *            @OA\Property(property="instagram", type="string", format="string", example="Test instagram"),
-     *            @OA\Property(property="linkedin", type="string", format="string", example="Test linkedin"),
-     *            @OA\Property(property="youtube", type="string", format="string", example="Test youtube"),
-     *            @OA\Property(property="pinterest", type="string", format="string", example="Test pinterest"),
-     *            @OA\Property(property="github", type="string", format="string", example="Test github"),
+     *            required={"app_name","local"},
+     *            @OA\Property(property="app_name", type="string", format="string", example="name your app"),
+     *            @OA\Property(property="local", type="string", format="string", example="en"),
      *         ),
      *      ),
      *      @OA\Response(
@@ -117,6 +103,83 @@ class SettingController extends Controller
         } catch (\Exception $exception) {
 
             return new ApiBlogResponse(null, $exception->getMessage(), false, (int)$exception->getCode());
+        }
+    }
+
+
+
+    /**
+     * @OA\Post (
+     *      path="/blog-api/setting/v1/show",
+     *      operationId="showSetting",
+     *      tags={"Setting"},
+     *      summary="show a setting in DB",
+     *      description="get setting in DB",
+     *      security={{ "apiAuth": {} }},
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *            required={"id"},
+     *            @OA\Property(property="id", type="integer", format="integer", example="1"),
+     *         ),
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="An example resource",
+     *          @OA\JsonContent(
+     *              type="object",
+     *                     @OA\Property(
+     *                         property="success",
+     *                         type="integer",
+     *                         example="1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items,
+     *                         example={
+     *                         "app_name": "App Name",
+     *                         "app_logo": "Logo",
+     *                         "app_favicon": "Favicon",
+     *                         "app_description": "Description",
+     *                         "app_short_description": "Short Description",
+     *                         "app_keywords": "Keywords",
+     *                         "address": "address",
+     *                         "phone": "Phone",
+     *                         "email": "Email",
+     *                         "mobile": "Mobile",
+     *                         "fax": "Fax",
+     *                         "telegram": "Telegram",
+     *                         "whatsapp": "Whatsapp",
+     *                         "facebook": "Facebook",
+     *                         "twitter": "Twitter",
+     *                         "instagram": "Instagram",
+     *                         "linkedin": "Linkedin",
+     *                         "Youtube": "youtube",
+     *                         "Pinterest": "pinterest",
+     *                         "Github": "github",
+     *                         "id": "1",
+     *                         },
+     *                     ),
+     *          )
+     *     ),
+     *     @OA\Response(response="401", description="Error  edit"),
+     *  )
+     */
+    public function show(ShowRequest $request): ApiBlogResponse
+    {
+        try {
+            return new ApiBlogResponse(
+                $this->settingService->show($request->validated(), Setting::class)
+            );
+        } catch (\Exception $exception) {
+            return new ApiBlogResponse(null, $exception->getMessage(), false, $exception->getCode());
         }
     }
 

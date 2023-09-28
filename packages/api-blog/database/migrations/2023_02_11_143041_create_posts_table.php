@@ -30,10 +30,10 @@ return new class extends Migration
             $table->integer('menu_order')->nullable();
             $table->string('pic_small')->nullable();
             $table->string('pic_large')->nullable();
-            $table->integer('priority')->default(0);
+            $table->integer('priority')->default(0)->nullable();
             $table->boolean('comment_status')->default(0);
-            $table->boolean('menu_status')->default(0);
-            $table->boolean('visible_index_status')->default(0);
+            $table->boolean('menu_status')->default(0)->nullable();
+            $table->boolean('visible_index_status')->default(0)->nullable();
             $table->timestamps();
             // Set FK posts --- categories
             $table->integer('category_id')->unsigned()->nullable();

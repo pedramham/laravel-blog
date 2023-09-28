@@ -13,15 +13,14 @@ class SettingService
 
     public function storeSetting(array $request): array
     {
+        app()->setLocale($request['local'] ?? 'en');
         $record = Setting::where(['id' => 1]);
         //if record exists update it so we have only one record
         if ($record->exists()) {
             Setting::findOrFail(1)->update($request);
+        } else {
+            Setting::create($request);
         }
-
-        Setting::create($request);
-
         return $request;
     }
-
 }

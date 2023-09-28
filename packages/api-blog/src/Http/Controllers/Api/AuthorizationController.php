@@ -168,7 +168,7 @@ class AuthorizationController extends Controller
 
         try {
             return new ApiBlogResponse(
-                $user->createToken("API TOKEN")->plainTextToken,
+                $user->createToken("API_TOKEN_BOLG")->plainTextToken,
                 'token'
             );
         } catch (\Exception $exception) {

@@ -3,6 +3,9 @@
 namespace Admin\ApiBolg\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
 class BaseRequest extends FormRequest
 {
@@ -33,12 +36,22 @@ class BaseRequest extends FormRequest
             'tags.id.*' => 'required|exists:tags,id',
             'tags.name.*' => 'required|unique:tags',
             'media' => 'array|nullable',
-            'media.video.url' => 'nullable:video,file|url',
-            'media.video.file' => 'nullable:video,url|mimes:mp4,mov,ogg,qt,mp3',
-            'media.video.likes' => 'nullable|integer',
-            'media.video.views' => 'nullable|integer',
             'media.image.pic_small' => 'nullable|mimes:jpeg,jpg,png,webp|max:10000',
             'media.image.pic_large' => 'nullable|mimes:jpeg,jpg,png,webp|max:99000',
+            'local' => 'string|required',
         ];
+    }
+
+    public function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        $response = response()->json([
+            'success' => false,
+            'message' => 'Invalid data send',
+            'details' => $errors->messages(),
+        ],  JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+
+        throw new HttpResponseException($response);
     }
 }

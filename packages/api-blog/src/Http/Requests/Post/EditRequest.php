@@ -11,9 +11,11 @@ class EditRequest extends BaseRequest
             [
                 'name' => 'string|nullable',
                 'title' => 'string|nullable',
-                'category_id' => 'integer|nullable|exists:categories,id',
-                'id' => 'integer|required|exists:posts,id',
-                'slug' => "alpha_dash|nullable|unique:posts,slug,$this->id",
+                'folder_name' => 'string|required',
+                'category_id' => 'integer|exists:categories,id|nullable',
+                'id' => 'integer|nullable|exists:posts,id',
+                'slug' => "alpha_dash|nullable|unique_translation:posts,slug,$this->id",
+                'media' => 'nullable',
             ]
         );
     }
